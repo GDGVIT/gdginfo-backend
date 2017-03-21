@@ -1,0 +1,38 @@
+import tornado.ioloop
+import tornado.web
+from tornado.httpserver import HTTPServer
+import tornado.options
+from pymongo import MongoClient
+import requests
+from tornado.gen import coroutine
+
+import json
+
+#db=MongoClient("mongodb://apuayush:Apurvanit@2304.mlab.com:17929/githubleaderboard")['githubleaderboard']
+db = MongoClient("localhost", 27017)['githubleaderboard']
+
+from tornado.options import define,options
+define("port",default=7777,help="run on the given port",type=int)
+
+
+class ApiHandler(tornado.web.RequestHandler):
+    @coroutine
+    @tornado.web.removeslash
+    def get(self):
+        response =[]
+        for members in db.collection_names():
+            #response.append(members['login'])
+            k=db[members].find_one()
+            k.pop('_id')
+            response.append(k)
+
+        self.write(json.dumps(response))
+
+
+if __name__ == "__main__":
+    tornado.options.parse_command_line()
+    app = tornado.web.Application(handlers=[(r'/leaderboard', ApiHandler)], db=db,
+                                  debug=True)
+    server = HTTPServer(app)
+    server.listen(options.port)
+    tornado.ioloop.IOLoop.current().start()
