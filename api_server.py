@@ -8,8 +8,8 @@ from tornado.gen import coroutine
 
 import json
 
-#db=MongoClient("mongodb://apuayush:Apurvanit@2304.mlab.com:17929/githubleaderboard")['githubleaderboard']
-db = MongoClient("localhost", 27017)['githubleaderboard']
+db=MongoClient("mongodb://apuayush:qwerty1234@ds137110.mlab.com:37110/githubleaderboard")['githubleaderboard']
+#db = MongoClient("localhost", 27017)['githubleaderboard']
 
 from tornado.options import define,options
 define("port",default=7777,help="run on the given port",type=int)
