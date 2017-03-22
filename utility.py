@@ -29,7 +29,7 @@ class UpdateWeeklyScore(RequestHandler):
                         d[contributors['login']] = 0
                     d[contributors['login']] += i[1] * 10 + i[2] * 5 + i[3] * 15 + i[4] * 10 + contributors[
                                                                                                    'contributions'] * 40
-                    if(db['apurv'].find_one()==None):
+                    if(db[contributors['login']].find_one()==None):
                         db[contributors['login']].update({'username': contributors['login']},
                                                          {"$set": {'score': 0,'username':contributors['login']}}, upsert=True)
                     db[contributors['login']].update({'username': contributors['login']},
