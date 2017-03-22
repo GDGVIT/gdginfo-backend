@@ -18,18 +18,18 @@ class UpdateWeeklyScore(RequestHandler):
         while True:
             d = dict()
             projects_name = []
-            for projects in requests.get("https://api.github.com/orgs/GDGVIT/repos").json():
+            for projects in requests.get("https://api.github.com/orgs/GDGVIT/repos?client_id=e63b429174efcee3f453&client_secret=baf28b3b72e252c8d54180bfa0b9706e90caa33c").json():
                 projects_name.append(
                     [projects['contributors_url'], projects['stargazers_count'], projects['watchers_count'],
                      projects['forks_count'], projects['open_issues']])
-
+            payload={'client_id':'e63b429174efcee3f453','client_secret':'baf28b3b72e252c8d54180bfa0b9706e90caa33c'}
             for i in projects_name:
-                for contributors in requests.get(i[0]).json():
+                for contributors in requests.get(i[0],params=payload).json():
                     if contributors['login'] not in d.keys():
                         d[contributors['login']] = 0
                     d[contributors['login']] += i[1] * 10 + i[2] * 5 + i[3] * 15 + i[4] * 10 + contributors[
                                                                                                    'contributions'] * 40
-                    if(db['apurv'].find_one()==None):
+                    if(db[contributors['login']].find_one()==None):
                         db[contributors['login']].update({'username': contributors['login']},
                                                          {"$set": {'score': 0,'username':contributors['login']}}, upsert=True)
                     db[contributors['login']].update({'username': contributors['login']},
