@@ -8,8 +8,7 @@ from tornado.gen import coroutine
 import json
 
 db=MongoClient("mongodb://apuayush:qwerty1234@ds137110.mlab.com:37110/githubleaderboard")['githubleaderboard']
-#conn = MongoClient("localhost", 27017)
-#db=conn['githubleaderboard']
+#db = MongoClient("localhost", 27017)['githubleaderboard']
 coll1=db['score']
 coll2=db['top']
 
