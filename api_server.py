@@ -14,7 +14,7 @@ db = MotorClient("mongodb://apuayush:qwerty1234@ds137110.mlab.com:"
 # db = MongoClient("localhost", 27017)['githubleaderboard']
 
 
-class ApiHandler(RequestHandler):
+class ApiHandler(tornado.web.RequestHandler):
     @coroutine
     @removeslash
     def get(self):
@@ -49,8 +49,7 @@ application = Application([(r'/leaderboard', ApiHandler),
                            (r'/topcontributors', TopContributors)
                            ], **settings)
 
-
 if __name__ == "__main__":
     server = HTTPServer(application)
     server.listen(5000)
-    IOLoop.current().start()()
+    IOLoop.current().start()
