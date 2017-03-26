@@ -1,49 +1,56 @@
-import tornado.ioloop
-import tornado.web
+# Tornado libraries
+from tornado.ioloop import IOLoop
+from tornado.web import RequestHandler, Application, asynchronous, removeslash
 from tornado.httpserver import HTTPServer
-import tornado.options
-from pymongo import MongoClient
-from tornado.gen import coroutine
+from tornado.httpclient import AsyncHTTPClient
+from tornado.gen import engine, Task, coroutine, Return
 
+# Other libraries
 import json
+from motor import MotorClient
 
-db=MongoClient("mongodb://apuayush:qwerty1234@ds137110.mlab.com:37110/githubleaderboard")['githubleaderboard']
-#db = MongoClient("localhost", 27017)['githubleaderboard']
-coll1=db['score']
-coll2=db['top']
-
-from tornado.options import define,options
-define("port",default=7777,help="run on the given port",type=int)
+db = MotorClient("mongodb://apuayush:qwerty1234@ds137110.mlab.com:"
+                 "37110/githubleaderboard")['githubleaderboard']
+# db = MongoClient("localhost", 27017)['githubleaderboard']
 
 
-class ApiHandler(tornado.web.RequestHandler):
+class ApiHandler(RequestHandler):
     @coroutine
-    @tornado.web.removeslash
+    @removeslash
     def get(self):
-        response =[]
-        for members in db.coll1.find():
-            #response.append(members['login'])
-            k=members
-            k.pop('_id')
-            response.append(k)
+        response = {}
+        members = db.coll1.find()
+
+        while(yield members.fetch_next):
+            member = members.next_object()
+            response[member['username']] = member['score']
 
         self.write(json.dumps(response))
 
-class TopContributors(tornado.web.RequestHandler):
+
+class TopContributors(RequestHandler):
+    @coroutine
     def get(self):
-        response=[]
-        for top_con in db.coll2.find():
-            k=top_con
-            k.pop('_id')
-            response.append(k)
+        response = {}
+        top_contributors = db.coll2.find()
+
+        while(yield top_contributors.fetch_next):
+            contributor = top_contributors.next_object()
+            response[contributor['repo']] = contributor['top']
+
         self.write(json.dumps(response))
 
+settings = dict(
+    db=db,
+    debug=True
+)
+
+application = Application([(r'/leaderboard', ApiHandler),
+                           (r'/topcontributors', TopContributors)
+                           ], **settings)
 
 
 if __name__ == "__main__":
-    tornado.options.parse_command_line()
-    app = tornado.web.Application(handlers=[(r'/leaderboard', ApiHandler),(r'/topcontributors',TopContributors)], db=db,
-                                  debug=True)
-    server = HTTPServer(app)
-    server.listen(options.port)
-    tornado.ioloop.IOLoop.current().start()
+    server = HTTPServer(application)
+    server.listen(5000)
+    IOLoop.current().start()()
