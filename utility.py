@@ -3,12 +3,17 @@ import time
 import requests
 import env
 
-db = env.MOTOR_CLIENT
+db = env.MONGO_CLIENT
+coll1=db['score']
+coll2=db['top']
 while True:
     d = dict()
     projects_name = []
+    members_name=[]
+    for members in requests.get(env.MEMBERS_LINK).json():
+        members_name.append(members['login'])
 
-    for projects in requests.get(env.REPO_LINK+env.API_CREDENTIALS).json():
+    for projects in requests.get(env.REPO_LINK).json():
 
         # scrolling through all the repos of github organization GDGVIT
 
@@ -32,16 +37,17 @@ while True:
 
         if pat.status_code != 204:  # if the repository has no contributor this wont allow it
             for contributors in pat.json():
-                all_contr.append(
-                    contributors['login'])  # all_contr will take all the contributors of repository in project
-                if contributors[
-                    'login'] not in d.keys():  # if a new member comes this will initiate him with a 0 score.
-                    d[contributors['login']] = 0
+                if(contributors['login'] in members_name):
+                    all_contr.append(
+                        contributors['login'])  # all_contr will take all the contributors of repository in project
+                    if contributors[
+                        'login'] not in d.keys():  # if a new member comes this will initiate him with a 0 score.
+                        d[contributors['login']] = 0
 
-                d[contributors['login']] += project[1] * 10 + project[2] * 5 + project[3] * 15 + project[
-                                                                                                     4] * 10 + \
-                                            contributors['contributions'] * 40
-                # this calculates score of each member and update the score of a member on dictionary d
+                    d[contributors['login']] += project[1] * 10 + project[2] * 5 + project[3] * 15 + project[
+                                                                                                         4] * 10 + \
+                                                contributors['contributions'] * 40
+                    # this calculates score of each member and update the score of a member on dictionary d
         try:
             db.coll2.update({'repo': project[5]}, {"$set": {'repo': project[5], 'top': all_contr[0]}},
                             upsert=True)  # this updates top contributor of all repos on coll2 of database

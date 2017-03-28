@@ -10,6 +10,8 @@ import json
 import env
 
 db = env.MOTOR_CLIENT
+coll1 = db['score']
+coll2 = db['top']
 
 class ApiHandler(RequestHandler):
     @coroutine
