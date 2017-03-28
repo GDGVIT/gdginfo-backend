@@ -7,14 +7,11 @@ from tornado.gen import engine, Task, coroutine, Return
 
 # Other libraries
 import json
-from motor import MotorClient
+import env
 
-db = MotorClient("mongodb://apuayush:qwerty1234@ds137110.mlab.com:"
-                 "37110/githubleaderboard")['githubleaderboard']
-# db = MongoClient("localhost", 27017)['githubleaderboard']
+db = env.MOTOR_CLIENT
 
-
-class ApiHandler(tornado.web.RequestHandler):
+class ApiHandler(RequestHandler):
     @coroutine
     @removeslash
     def get(self):

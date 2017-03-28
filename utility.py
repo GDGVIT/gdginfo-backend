@@ -1,20 +1,15 @@
-from tornado.web import Application, RequestHandler
-from tornado.gen import coroutine, sleep
+# Tornado libraries
 from tornado.ioloop import IOLoop
-from tornado.options import parse_command_line, define, options
+from tornado.web import RequestHandler, Application, asynchronous, removeslash
 from tornado.httpserver import HTTPServer
+from tornado.httpclient import AsyncHTTPClient
+from tornado.gen import engine, Task, coroutine, Return
+
+# Other libraries
 import requests
-from pymongo import MongoClient
+import env
 
-db = MongoClient("mongodb://apuayush:qwerty1234@ds137110.mlab.com:37110/githubleaderboard")["githubleaderboard"]
-
-# coll1 stores the score of all the members & coll2 stores the top contributors of all repos"""
-
-coll1 = db['score']
-coll2 = db['top']
-
-define("port", default=9125, help="run on the given port", type=int)
-
+db = env.MOTOR_CLIENT
 
 class UpdateWeeklyScore(RequestHandler):
     """This class calculates the score of each member of the organization in coll1 and top contributors of all the
@@ -26,8 +21,7 @@ class UpdateWeeklyScore(RequestHandler):
             d = dict()
             projects_name = []
 
-            for projects in requests.get(
-                    "https://api.github.com/orgs/GDGVIT/repos?client_id=e63b429174efcee3f453&client_secret=baf28b3b72e252c8d54180bfa0b9706e90caa33c&per_page=200&type=all").json():
+            for projects in requests.get(env.REPO_LINK+env.API_CREDENTIALS).json():
 
                 # scrolling through all the repos of github organization GDGVIT
 
@@ -47,8 +41,7 @@ class UpdateWeeklyScore(RequestHandler):
 
             for project in projects_name:
                 all_contr = []
-                pat = requests.get(project[
-                                       0] + "?client_id=e63b429174efcee3f453&client_secret=baf28b3b72e252c8d54180bfa0b9706e90caa33c&per_page=62&type=all")
+                pat = requests.get(project[0] + env.API_CREDENTIALS)
 
                 if pat.status_code != 204:  # if the repository has no contributor this wont allow it
                     for contributors in pat.json():
