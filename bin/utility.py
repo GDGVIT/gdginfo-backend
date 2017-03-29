@@ -1,6 +1,8 @@
 # Other libraries
 import time
 import requests
+import sys
+sys.path.append('../')
 import env
 
 db = env.MONGO_CLIENT
