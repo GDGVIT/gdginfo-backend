@@ -8,6 +8,7 @@ from tornado.gen import engine, Task, coroutine, Return
 # Other libraries
 import json
 import env
+import os
 
 db = env.MOTOR_CLIENT
 coll1 = db['score']
@@ -99,5 +100,5 @@ application = Application([(r'/leaderboard', ApiHandler),
 
 if __name__ == "__main__":
     server = HTTPServer(application)
-    server.listen(5000)
+    server.listen(os.environ.get("PORT",5000))
     IOLoop.current().start()
