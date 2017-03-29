@@ -1,1 +1,1 @@
-web: python server.py
+web: sh start_both.sh

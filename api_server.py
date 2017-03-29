@@ -33,11 +33,11 @@ class ApiHandler(RequestHandler):
         jsonData = {
         'status' : 200,
         'message' : 'OK',
-        'payload' : json.dumps(response)
+        'payload' : response
         
         
         }
-        self.write(jsonData)
+        self.write(json.dumps(jsonData))
         
     def write_error(self,status_code,**kwargs):
         jsonData = {
@@ -45,7 +45,7 @@ class ApiHandler(RequestHandler):
         'message' : "Internal server error",
         'answer' : 'NULL'
         }
-        self.write(jsonData)
+        self.write(json.dumps(jsonData))
     def options(self):
         self.set_status(204)
         self.finish()
@@ -71,10 +71,10 @@ class TopContributors(RequestHandler):
         jsonData = {
         'status' : 200,
         'message' : 'OK',
-        'payload' : json.dumps(response)
+        'payload' : response
         
         }
-        self.write(jsonData)
+        self.write(json.dumps(jsonData))
         
     def write_error(self,status_code,**kwargs):
         jsonData = {
@@ -82,7 +82,7 @@ class TopContributors(RequestHandler):
         'message' : "Internal server error",
         'answer' : 'NULL'
         }
-        self.write(jsonData)
+        self.write(json.dumps(jsonData))
     def options(self):
         self.set_status(204)
         self.finish()
