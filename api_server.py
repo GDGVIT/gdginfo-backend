@@ -14,6 +14,12 @@ coll1 = db['score']
 coll2 = db['top']
 
 class ApiHandler(RequestHandler):
+    
+    def set_default_headers(self):
+        print "setting headers!!!"
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    
     @coroutine
     @removeslash
     def get(self):
@@ -24,10 +30,35 @@ class ApiHandler(RequestHandler):
             member = members.next_object()
             response[member['username']] = member['score']
 
-        self.write(json.dumps(response))
+        jsonData = {
+        'status' : 200,
+        'message' : 'OK',
+        'payload' : json.dumps(response)
+        
+        
+        }
+        self.write(jsonData)
+        
+    def write_error(self,status_code,**kwargs):
+        jsonData = {
+        'status' : int(status_code),
+        'message' : "Internal server error",
+        'answer' : 'NULL'
+        }
+        self.write(jsonData)
+    def options(self):
+        self.set_status(204)
+        self.finish()
+        
 
 
 class TopContributors(RequestHandler):
+    
+    def set_default_headers(self):
+        print "setting headers!!!"
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    
     @coroutine
     def get(self):
         response = {}
@@ -37,7 +68,25 @@ class TopContributors(RequestHandler):
             contributor = top_contributors.next_object()
             response[contributor['repo']] = contributor['top']
 
-        self.write(json.dumps(response))
+        jsonData = {
+        'status' : 200,
+        'message' : 'OK',
+        'payload' : json.dumps(response)
+        
+        }
+        self.write(jsonData)
+        
+    def write_error(self,status_code,**kwargs):
+        jsonData = {
+        'status' : int(status_code),
+        'message' : "Internal server error",
+        'answer' : 'NULL'
+        }
+        self.write(jsonData)
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
 
 settings = dict(
     db=db,
