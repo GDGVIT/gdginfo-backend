@@ -10,7 +10,7 @@ import json
 import os
 from motor import MotorClient
 
-db = MotorClient(os.environ[DB_LINK])['githubleaderboard']
+db = MotorClient(os.environ['DB_LINK'])['githubleaderboard']
 coll1 = db['score']
 coll2 = db['top']
 
@@ -95,7 +95,7 @@ settings = dict(
 )
 
 application = Application([(r'/leaderboard', ApiHandler),
-                           (r'/topcontributors', TopContributors)
+                           (r'/topcontributors', TopContributors),
                            ], **settings)
 
 if __name__ == "__main__":

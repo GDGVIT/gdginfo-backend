@@ -4,7 +4,7 @@ import requests
 import os
 from pymongo import MongoClient
 
-db = MongoClient(os.environ[DB_LINK])['githubleaderboard']
+db = MongoClient(os.environ['DB_LINK'])['githubleaderboard']
 coll1 = db['score']
 coll2 = db['top']
 
@@ -12,10 +12,10 @@ while True:
     d = {}
     projects_name = []
     members_name = []
-    for members in requests.get(os.environ[MEMBERS_LINK]).json():
+    for members in requests.get(os.environ['MEMBERS_LINK']).json():
         members_name.append(members['login'])
 
-    for projects in requests.get(os.environ[REPO_LINK]).json():
+    for projects in requests.get(os.environ['REPO_LINK']).json():
 
         try:
             projects_name.append([projects['contributors_url'],
@@ -29,7 +29,7 @@ while True:
 
     for project in projects_name:
         all_contr = []
-        pat = requests.get(project[0] + os.environ[API_CREDENTIALS])
+        pat = requests.get(project[0] + os.environ['API_CREDENTIALS'])
 
         if pat.status_code != 204:
             for contributors in pat.json():
