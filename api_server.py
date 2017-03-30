@@ -7,10 +7,10 @@ from tornado.gen import engine, Task, coroutine, Return
 
 # Other libraries
 import json
-import env
 import os
+from motor import MotorClient
 
-db = env.MOTOR_CLIENT
+db = MotorClient(os.environ[DB_LINK])['githubleaderboard']
 coll1 = db['score']
 coll2 = db['top']
 
