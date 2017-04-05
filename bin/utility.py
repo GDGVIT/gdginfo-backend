@@ -73,5 +73,3 @@ while True:
                         {"$set": {'score': d[members] - member_score,
                                   'username': members}}, upsert=True)
         d[members] = 0
-
-    time.sleep(7 * 24 * 60 * 60)
