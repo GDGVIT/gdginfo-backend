@@ -59,15 +59,11 @@ while True:
 
     time2 = time.mktime(datetime.datetime.now().timetuple())
     if flag == 1 or time2 - time1 > 7 * 24 * 60 * 60:
-        rel = d
+        rel = d.copy()
         time1 = time2
         flag = 999
 
     for members in d.keys():
-        if db.coll1.find_one({'username': members}) is None:
-            db.coll1.update({'username': members},
-                            {"$set": {'score': 0, 'username': members}},
-                            upsert=True)
         member_score =rel[members]
         db.coll1.update({'username': members},
                         {"$set": {'score': d[members] - member_score,
