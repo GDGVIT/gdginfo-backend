@@ -3,13 +3,18 @@ import time
 import requests
 import os
 from pymongo import MongoClient
+import datetime
 
 db = MongoClient(os.environ['DB_LINK'])['githubleaderboard']
 coll1 = db['score']
 coll2 = db['top']
+d=dict()
+rel=dict()
+
+flag = 1
+time1 = time.mktime(datetime.datetime.now().timetuple())
 
 while True:
-    d = {}
     projects_name = []
     members_name = []
     for members in requests.get(os.environ['MEMBERS_LINK']).json():
@@ -39,6 +44,7 @@ while True:
 
                     if contributors['login'] not in d.keys():
                         d[contributors['login']] = 0
+                        rel[contributors['login']]=0
 
                     d[contributors['login']] += project[1] * 10 + project[2] * 5
                     + project[3] * 15 + project[4] * 10
@@ -51,12 +57,18 @@ while True:
         except:
             pass
 
+    time2 = time.mktime(datetime.datetime.now().timetuple())
+    if flag == 1 or time2 - time1 > 7 * 24 * 60 * 60:
+        rel = d
+        time1 = time2
+        flag = 999
+
     for members in d.keys():
         if db.coll1.find_one({'username': members}) is None:
             db.coll1.update({'username': members},
                             {"$set": {'score': 0, 'username': members}},
                             upsert=True)
-        member_score = db.coll1.find_one({'username': members})['score']
+        member_score =rel[members]
         db.coll1.update({'username': members},
                         {"$set": {'score': d[members] - member_score,
                                   'username': members}}, upsert=True)
