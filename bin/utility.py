@@ -8,8 +8,8 @@ import datetime
 db = MongoClient(os.environ['DB_LINK'])['githubleaderboard']
 coll1 = db['score']
 coll2 = db['top']
-d=dict()
-rel=dict()
+d = dict()
+rel = dict()
 
 flag = 1
 time1 = time.mktime(datetime.datetime.now().timetuple())
@@ -39,16 +39,16 @@ while True:
         if pat.status_code != 204:
             for contributors in pat.json():
 
-                if(contributors['login'] in members_name):
+                if (contributors['login'] in members_name):
                     all_contr.append(contributors['login'])
 
                     if contributors['login'] not in d.keys():
                         d[contributors['login']] = 0
-                        rel[contributors['login']]=0
+                        rel[contributors['login']] = 0
 
-                    d[contributors['login']] += project[1] * 10 + project[2] * 5
-                    + project[3] * 15 + project[4] * 10
-                    + contributors['contributions'] * 40
+                    d[contributors['login']] += project[1] * 10 + project[2] * 5 + \
+                                                project[3] * 15 + project[4] * 10 + \
+                                                contributors['contributions'] * 40
 
         try:
             db.coll2.update({'repo': project[5]},
@@ -64,7 +64,7 @@ while True:
         flag = 999
 
     for members in d.keys():
-        member_score =rel[members]
+        member_score = rel[members]
         db.coll1.update({'username': members},
                         {"$set": {'score': d[members] - member_score,
                                   'username': members}}, upsert=True)
