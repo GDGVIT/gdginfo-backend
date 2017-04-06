@@ -47,7 +47,7 @@ while True:
                         rel[contributors['login']] = 0
 
                     d[contributors['login']] += project[1] * 10 + project[2] * 5 + \
-                                                project[3] * 15 + project[4] * 10 + \
+                                                project[3] * 15 + project[4] * 3 + \
                                                 contributors['contributions'] * 40
 
         try:
