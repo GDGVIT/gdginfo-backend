@@ -1,3 +1,1 @@
-web: python api_server.py
-worker: python utility.py
-web: python server.py
+web: python ./bin/utility.py
