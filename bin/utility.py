@@ -1,71 +1,94 @@
-# Other libraries
-import time
 import requests
 import os
-from pymongo import MongoClient
 import datetime
+import env
 
-db = MongoClient(os.environ['DB_LINK'])['githubleaderboard']
-coll1 = db['score']
-coll2 = db['top']
-d = dict()
-rel = dict()
+try:
+    token = os.environ['token']
+except:
+    token = env.token
+    pass
 
-flag = 1
-time1 = time.mktime(datetime.datetime.now().timetuple())
+print(token)
 
-while True:
-    projects_name = []
-    members_name = []
-    for members in requests.get(os.environ['MEMBERS_LINK']).json():
-        members_name.append(members['login'])
+url = 'https://api.github.com/graphql'
+headers = {'Authorization': 'token %s' % token}
+def leaderboard():
+    member_list = dict()
+    time = datetime.datetime.utcnow()-datetime.timedelta(days=7)
+    time = time.isoformat()
+    json = {
+        "query": """
+            {
+              organization(login: "GDGVIT") {
+                repositories(first: 100, affiliations: COLLABORATOR, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                  nodes {
+                    name
+                    ref(qualifiedName: "master") {
+                      target {
+                        ... on Commit {
+                          history(first: 50, since: "%s") {
+                            edges {
+                              node {
+                                author {
+                                  name
+                                  date
+                                }
+                                additions
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+    }
+            """ % time
+    }
 
-    for projects in requests.get(os.environ['REPO_LINK']).json():
-
+    # To escape the NoneType object issue when internet is slow
+    repos = None
+    while repos == None:
         try:
-            projects_name.append([projects['contributors_url'],
-                                  projects['stargazers_count'],
-                                  projects['watchers_count'],
-                                  projects['forks_count'],
-                                  projects['open_issues'], projects['name']])
+            print('hiding here')
+            ret = requests.post(url=url, json=json, headers=headers)
+            ret = ret.json()
+            repos = ret['data']['organization']['repositories']['nodes']
+        except: pass
 
-        except:
-            pass
-
-    for project in projects_name:
-        all_contr = []
-        pat = requests.get(project[0] + os.environ['API_CREDENTIALS'])
-
-        if pat.status_code != 204:
-            for contributors in pat.json():
-
-                if (contributors['login'] in members_name):
-                    all_contr.append(contributors['login'])
-
-                    if contributors['login'] not in d.keys():
-                        d[contributors['login']] = 0
-                        rel[contributors['login']] = 0
-
-                    d[contributors['login']] += project[1] * 10 + project[2] * 5 + \
-                                                project[3] * 15 + project[4] * 3 + \
-                                                contributors['contributions'] * 40
-
+    for i in repos:
+        print(i)
         try:
-            db.coll2.update({'repo': project[5]},
-                            {"$set": {'repo': project[5], 'top': all_contr[0]}},
-                            upsert=True)
+            contributor_edges = i['ref']['target']['history']['edges']
         except:
-            pass
+            continue
+        for j in contributor_edges:
+            contr = j['node']['author']['name']
+            prev_add = 0
+            total_commits = 0
+            try:
+                total_commits = member_list[contr]['commits']
+                prev_add = member_list[contr]['additions']
+            except: pass
+            total_commits = total_commits + 1
+            additions = prev_add + int(j['node']['additions'])
+            member_list[contr] = {
+                'commits': total_commits,
+                'additions': additions,
+                'score': total_commits*additions
+            }
 
-    time2 = time.mktime(datetime.datetime.now().timetuple())
-    if flag == 1 or time2 - time1 > 7 * 24 * 60 * 60:
-        rel = d.copy()
-        time1 = time2
-        flag = 999
+    return member_list
 
-    for members in d.keys():
-        member_score = rel[members]
-        db.coll1.update({'username': members},
-                        {"$set": {'score': d[members] - member_score,
-                                  'username': members}}, upsert=True)
-        d[members] = 0
+
+def top_contributor():
+
+    json = {}
+    # print(json)
+    ret = requests.post(url=url, json=json, headers=headers)
+    return ret.json()
+
+# top_contributor()
+leaderboard()
