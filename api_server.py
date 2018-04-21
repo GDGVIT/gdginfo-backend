@@ -17,6 +17,7 @@ class LeaderBoard(RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
 
+    @coroutine
     def get(self):
         res = utility.leaderboard()
 

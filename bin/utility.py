@@ -9,32 +9,32 @@ except:
     token = env.token
     pass
 
-print(token)
-
 url = 'https://api.github.com/graphql'
 headers = {'Authorization': 'token %s' % token}
-def leaderboard():
-    member_list = dict()
-    time = datetime.datetime.utcnow()-datetime.timedelta(days=7)
+
+def extract_repos():
+    time = datetime.datetime.utcnow() - datetime.timedelta(days=7)
     time = time.isoformat()
     json = {
         "query": """
-            {
-              organization(login: "GDGVIT") {
-                repositories(first: 100, affiliations: COLLABORATOR, orderBy: {field: PUSHED_AT, direction: DESC}) {
-                  nodes {
-                    name
-                    ref(qualifiedName: "master") {
-                      target {
-                        ... on Commit {
-                          history(first: 50, since: "%s") {
-                            edges {
-                              node {
-                                author {
-                                  name
-                                  date
+                {
+                  organization(login: "GDGVIT") {
+                    repositories(first: 100, affiliations: COLLABORATOR, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                      nodes {
+                        name
+                        ref(qualifiedName: "master") {
+                          target {
+                            ... on Commit {
+                              history(first: 50, since: "%s") {
+                                edges {
+                                  node {
+                                    author {
+                                      name
+                                      date
+                                    }
+                                    additions
+                                  }
                                 }
-                                additions
                               }
                             }
                           }
@@ -42,10 +42,8 @@ def leaderboard():
                       }
                     }
                   }
-                }
-              }
-    }
-            """ % time
+        }
+                """ % time
     }
 
     # To escape the NoneType object issue when internet is slow
@@ -56,10 +54,15 @@ def leaderboard():
             ret = requests.post(url=url, json=json, headers=headers)
             ret = ret.json()
             repos = ret['data']['organization']['repositories']['nodes']
-        except: pass
+        except:
+            pass
+    return repos
 
+
+def leaderboard():
+    member_list = dict()
+    repos = extract_repos()
     for i in repos:
-        print(i)
         try:
             contributor_edges = i['ref']['target']['history']['edges']
         except:
@@ -84,11 +87,10 @@ def leaderboard():
 
 
 def top_contributor():
-
+    repos = extract_repos()
     json = {}
     # print(json)
     ret = requests.post(url=url, json=json, headers=headers)
     return ret.json()
 
-# top_contributor()
-leaderboard()
+# TODO - top_contributors we will see later right now api limit exceeded
