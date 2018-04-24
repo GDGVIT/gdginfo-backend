@@ -50,7 +50,7 @@ class TopContributors(RequestHandler):
     
     @coroutine
     def get(self):
-        response = {}
+        response = utility.topcontributor()
 
         jsonData = {
             'status' : 200,
