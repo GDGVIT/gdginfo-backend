@@ -20,7 +20,7 @@ git clone https://github.com/GDGVIT/gdginfo-backend.git
 cd gdginfo-backend
 echo "TOKEN=<your-github-access-token>" > .env
 echo "ORGANIZATION=<your-github-ORG>" >> .env
-python api_server.py
+python3 api_server.py
 ```
 
 ## How it works

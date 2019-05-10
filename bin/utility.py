@@ -1,54 +1,48 @@
 import requests
-import os
+import sys
 import datetime
-from dotenv import load_dotenv
+import json
 
-load_dotenv()
 
-token = os.getenv('TOKEN')
-org = os.getenv('ORGANIZATION')
-print(org)
+def extract_repos(token, org, redis):
 
-url = 'https://api.github.com/graphql'
-headers = {'Authorization': 'token %s' % token}
-
-def extract_repos():
+    url = 'https://api.github.com/graphql'
+    headers = {'Authorization': 'token %s' % token}
     time = datetime.datetime.utcnow() - datetime.timedelta(days=15)
     time = time.isoformat()
     json = {
-        "query": """
-                {
-                  organization(login: "%s") {
-                    repositories(first: 100, affiliations: COLLABORATOR, orderBy: {field: PUSHED_AT, direction: DESC}) {
-                      nodes {
-                        name
-                        ref(qualifiedName: "master") {
-                          target {
-                            ... on Commit {
-                              history(first: 50, since: "%s") {
-                                edges {
-                                  node {
-                                    author {
-                                      name
-                                      date
+            "query": """
+                    {
+                    organization(login: "%s") {
+                        repositories(first: 100, affiliations: COLLABORATOR, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                        nodes {
+                            name
+                            ref(qualifiedName: "master") {
+                            target {
+                                ... on Commit {
+                                history(first: 50, since: "%s") {
+                                    edges {
+                                    node {
+                                        author {
+                                        name
+                                        date
+                                        }
+                                        additions
+                                        deletions
                                     }
-                                    additions
-                                    deletions
-                                  }
+                                    }
                                 }
-                              }
+                                }
                             }
-                          }
+                            }
                         }
-                      }
+                        }
                     }
-                  }
-        }
-                """ % (
+            }
+                   """ % (
                     org,
                     time)
-    }
-    print(json)
+        }
 
     # To escape the NoneType object issue when internet is slow
     repos = None
@@ -62,11 +56,21 @@ def extract_repos():
             pass
     return repos
 
+def cache_response(token, org, redis):
+    data = extract_repos(token, org, redis)
+    r = redis.StrictRedis()
+    r.execute_command('JSON.SET', 'object', '.', json.dumps(data))
 
-def leaderboard():
+def get_cached_response(org, redis):
+    r = redis.StrictRedis()
+    reply = json.loads(r.execute_command('JSON.GET', 'object'))
+    return reply
+
+
+def leaderboard(token, org, redis):
     member_list = dict()
     score = dict()
-    repos = extract_repos()
+    repos = extract_repos(token, org, redis)
     for i in repos:
         try:
             contributor_edges = i['ref']['target']['history']['edges']
@@ -96,10 +100,10 @@ def leaderboard():
     return score
 
 
-def topcontributor():
+def topcontributor(token, org, redis):
     member_list = dict()
     top_contributor = dict()
-    repos = extract_repos()
+    repos = extract_repos(token, org, redis)
     for i in repos:
     	repo_name = i['name']
     	count = dict()
