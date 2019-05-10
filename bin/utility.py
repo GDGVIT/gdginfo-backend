@@ -1,14 +1,13 @@
 import requests
 import os
 import datetime
+from dotenv import load_dotenv
 
-token = None
+load_dotenv()
 
-try:
-    token = os.environ['token']
-except:
-	import env
-	token = env.token
+token = os.getenv('TOKEN')
+org = os.getenv('ORGANIZATION')
+print(org)
 
 url = 'https://api.github.com/graphql'
 headers = {'Authorization': 'token %s' % token}
@@ -19,7 +18,7 @@ def extract_repos():
     json = {
         "query": """
                 {
-                  organization(login: "GDGVIT") {
+                  organization(login: "%s") {
                     repositories(first: 100, affiliations: COLLABORATOR, orderBy: {field: PUSHED_AT, direction: DESC}) {
                       nodes {
                         name
@@ -45,8 +44,11 @@ def extract_repos():
                     }
                   }
         }
-                """ % time
+                """ % (
+                    org,
+                    time)
     }
+    print(json)
 
     # To escape the NoneType object issue when internet is slow
     repos = None

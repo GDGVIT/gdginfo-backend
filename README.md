@@ -10,16 +10,6 @@ You can use this application easily just by changing the following credentials..
 	ii-name of the organization
 	iii- github api key
 
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-python 2.7
-pip-tornado package
-pip-pymongo package
-pip-requests package
-```
 
 ### How to use
 
@@ -27,6 +17,10 @@ just clone the repository and add the above credentials.
 
 ```
 git clone https://github.com/GDGVIT/gdginfo-backend.git
+cd gdginfo-backend
+echo "TOKEN=<your-github-access-token>" > .env
+echo "ORGANIZATION=<your-github-ORG>" >> .env
+python api_server.py
 ```
 
 ## How it works
@@ -75,7 +69,17 @@ github api provides only 10 requests per minute. So you need to do the authentic
 
 Shubham Bhardwaj
 Apurva Nitanjay
+Angad Sharma
 
+## Things that need to be implemented 
 
+- [ ] Caching layer
+- [ ] CRON job to update cache
+- [ ] Handler for organization login
+- [ ] Organization specific cache maintenance
 
+Why this needs to be implemented
 
+* Response latency
+* Only 10 requests allowed per minute
+* The logic for handling multiple organizations does not exist
