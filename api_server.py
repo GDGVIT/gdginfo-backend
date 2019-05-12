@@ -141,7 +141,7 @@ if __name__ == "__main__":
     # starting application
     application = Application([(r'/leaderboard', LeaderBoard, dict(redis=r, token=token, org=org)),
                            (r'/topcontributors', TopContributors, dict(redis=r, token=token, org=org)),
-                           (r'/all', Repos, dict(redis=r, token=token, org=org))
+                           (r'/repos', Repos, dict(redis=r, token=token, org=org))
                            ], **settings)
     server = HTTPServer(application)
     server.listen(os.environ.get("PORT", 5000))
