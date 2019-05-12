@@ -20,7 +20,20 @@ git clone https://github.com/GDGVIT/gdginfo-backend.git
 cd gdginfo-backend
 echo "TOKEN=<your-github-access-token>" > .env
 echo "ORGANIZATION=<your-github-ORG>" >> .env
+```
+
+### Ways to run
+
+*	Regular mode
+
+```
 python3 api_server.py
+```
+
+* Caching mode
+
+```
+python3 api_server.py --with-cache
 ```
 
 ## How it works
@@ -33,12 +46,14 @@ members contribution in those repository.
 The application scrolls through all the repositories that belong to this organization.
 and using that it calculates contribution a particular individual based on his contribution to that repository.
 
-weightage-
-	stargazers_count=10
-	watchers_count=5
-	forks_count=15
-	contributions=40
-	
+
+| Action | Weightage |
+|:------:|:---------:|
+| stargazers count | 10 |
+| watchers count | 10 |
+| forks count | 15 |
+| contributions | 40 |
+
 
 ```
 d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + contributors['contributions'] * 40
@@ -46,7 +61,7 @@ d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + 
 
 ### And coding style tests
 
-This updates the data on the database and if data is not present it will automatically create memory dor that.
+This updates the data on the database and if data is not present it will automatically create memory for that.
 
 ```
 db.coll1.update({'username': members},
@@ -57,6 +72,26 @@ db.coll1.update({'username': members},
 ## Note
 
 github api provides only 10 requests per minute. So you need to do the authentication. 
+
+
+<br/>
+
+## Things that need to be implemented 
+
+- [X] Caching layer
+- [ ] CRON job to update cache
+- [X] Organization specific cache maintenance
+- [ ] Handler for organization login
+
+<br/>
+
+Why this needs to be implemented
+
+* Response latency
+* Only 10 requests allowed per minute
+* The logic for handling multiple organizations does not exist
+
+<br/>
 
 ## Built With
 
@@ -71,15 +106,3 @@ Shubham Bhardwaj
 Apurva Nitanjay
 Angad Sharma
 
-## Things that need to be implemented 
-
-- [ ] Caching layer
-- [ ] CRON job to update cache
-- [ ] Handler for organization login
-- [ ] Organization specific cache maintenance
-
-Why this needs to be implemented
-
-* Response latency
-* Only 10 requests allowed per minute
-* The logic for handling multiple organizations does not exist
