@@ -124,6 +124,8 @@ if __name__ == "__main__":
     token = os.environ.get("TOKEN")
     org = os.environ.get("ORGANIZATION")
     if len(sys.argv) > 1 and sys.argv[1] == "--with-cache":
+        print("Connecting to redis....")
+        os.sleep(20)
         r = redis.from_url(os.environ.get("REDIS_URL"))
         if r is None:
             print("[ERROR] cannot connect to caching layer")
