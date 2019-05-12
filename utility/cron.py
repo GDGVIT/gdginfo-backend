@@ -1,6 +1,6 @@
 import schedule 
 import time
-from utility import cache_response
+import utility
 import threading
 
 # overriding the thread implementation to include args
@@ -14,7 +14,7 @@ class ScheduleCache(threading.Thread):
 
 # Run job everyday at 10:30
 def cache_job(token, org, redis):
-    schedule.every().day.at("10:30").do(cache_response, token, org, redis)
+    schedule.every().day.at("10:30").do(utility.cache_response, token, org, redis)
     while True:
         print("[RUNNING] cache_job")
         schedule.run_pending()
