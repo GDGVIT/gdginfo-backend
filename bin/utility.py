@@ -1,8 +1,7 @@
 import requests
 import sys
 import datetime
-import json
-
+import pickle
 
 def extract_repos(token, org, redis):
 
@@ -58,19 +57,28 @@ def extract_repos(token, org, redis):
 
 def cache_response(token, org, redis):
     data = extract_repos(token, org, redis)
-    r = redis.StrictRedis()
-    r.execute_command('JSON.SET', 'object', '.', json.dumps(data))
+    pickled_object = pickle.dumps(data)
+    redis.set(org, pickled_object)
+    
 
 def get_cached_response(org, redis):
-    r = redis.StrictRedis()
-    reply = json.loads(r.execute_command('JSON.GET', 'object'))
-    return reply
+    unpacked_pickled_object = pickle.loads(redis.get(org))
+    return unpacked_pickled_object
 
+def repos(token, org, redis):
+    if redis is None:
+        repos = extract_repos(token, org, redis)
+    else:
+        repos = get_cached_response(org, redis)
+    return repos
 
 def leaderboard(token, org, redis):
     member_list = dict()
     score = dict()
-    repos = extract_repos(token, org, redis)
+    if redis is None:
+        repos = extract_repos(token, org, redis)
+    else:
+        repos = get_cached_response(org, redis)
     for i in repos:
         try:
             contributor_edges = i['ref']['target']['history']['edges']
@@ -103,7 +111,10 @@ def leaderboard(token, org, redis):
 def topcontributor(token, org, redis):
     member_list = dict()
     top_contributor = dict()
-    repos = extract_repos(token, org, redis)
+    if redis is None:
+        repos = extract_repos(token, org, redis)
+    else:
+        repos = get_cached_response(org, redis)
     for i in repos:
     	repo_name = i['name']
     	count = dict()

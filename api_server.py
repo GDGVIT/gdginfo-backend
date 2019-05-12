@@ -29,7 +29,7 @@ class LeaderBoard(RequestHandler):
 
     @coroutine
     def get(self):
-        res = utility.leaderboard(self.token, self.org, self,redis)
+        res = utility.leaderboard(self.token, self.org, self.redis)
 
         jsonData = {
             'status': 200,
@@ -64,8 +64,7 @@ class TopContributors(RequestHandler):
     
     @coroutine
     def get(self):
-        response = utility.topcontributor(self.token, self.org, self,redis)
-
+        response = utility.topcontributor(self.token, self.org, self.redis)
         jsonData = {
             'status' : 200,
             'message' : 'OK',
@@ -97,10 +96,7 @@ class Repos(RequestHandler):
         self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
     @coroutine
     def get(self):
-        print("DEBUG")
-        utility.cache_response(self.token, self.org, self.redis)
-        response = utility.get_cached_response(self.org, self.redis)
-
+        response = utility.repos(self.token, self.org, self.redis)
         jsonData = {
             'status' : 200,
             'message' : 'OK',
@@ -108,7 +104,6 @@ class Repos(RequestHandler):
         
         }
         self.write(json.dumps(jsonData))
-        
     def write_error(self, status_code, **kwargs):
         jsonData = {
             'status': int(status_code),
@@ -127,13 +122,17 @@ settings = dict(
 
 
 if __name__ == "__main__":
-    load_dotenv()
+    load_dotenv(dotenv_path="./.env", verbose=True)
     if len(sys.argv) > 1 and sys.argv[1] == "--with-cache":
         r = redis.from_url(os.environ.get("REDIS_URL"))
     else:
         r = None
     token = os.environ.get("TOKEN")
     org = os.environ.get("ORGANIZATION")
+
+    if token is None or org is None:
+        print("Token or Organization was null")
+        exit(1)
     application = Application([(r'/leaderboard', LeaderBoard, dict(redis=r, token=token, org=org)),
                            (r'/topcontributors', TopContributors, dict(redis=r, token=token, org=org)),
                            (r'/all', Repos, dict(redis=r, token=token, org=org))
