@@ -10,7 +10,7 @@ For calculating score of all members of any github organisation and top contribu
 - [X] GitHub Graph API
 - [X] Interchangable organization leaderboard
 - [X] Top contributors for organizations
-- [X] Repo specific metadata for organizatiom
+- [X] Repository specific metadata for organizations
 - [X] Pluggable caching layer 
 - [X] Automatic Scheduled cache update
 - [X] Manual cache update
@@ -28,8 +28,13 @@ You can use this application easily just by changing the following credentials..
 This project uses `.env`. To configure, simply make a file named *.env* in the root of your project and add the following lines to it.
 
 ```
+# GitHub token
 TOKEN=<Your github token, under developer settings on GitHub>
+
+# organization handle on GitHub 
 ORGANIZATION=<Name of the organization as specified in GitHub>
+
+# redis URI
 REDIS_URL=<your redis url>
 ```
 
@@ -37,7 +42,7 @@ REDIS_URL=<your redis url>
 
 ### How to use
 
-just clone the repository and add the above credentials.
+Clone the repository and add the above credentials.
 
 ```bash
 git clone https://github.com/GDGVIT/gdginfo-backend.git
@@ -64,7 +69,7 @@ python api_server.py --with-cache
 ```
 <br/>
 
-## How it works
+### How it works
 
 **Algorithm**: It uses github api and fetches the information about members, all the repositories in that organization, 
 members contribution in those repository.
@@ -81,24 +86,31 @@ and using that it calculates contribution a particular individual based on his c
 
 <br/>
 
-```
+```python
 d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + contributors['contributions'] * 40
 ```
 <br/>
 
-**Caching**: When the *--with-cache* flag is provided, all responses are served from a cache. This cache is updated daily. This significantly decreases response latency since github api provides only 10 requests per minute. 
+**Caching**: When the `--with-cache` flag is provided, all responses are served from a cache. This cache is updated daily. This significantly decreases response latency since github api provides only 10 requests per minute. 
 
 
 <br/>
 
-## Built With
+### Limitations
+
+* Only 30 repositories can be fetched from the API at one time.
+* Only 10 requests can be made to the API per minute.
+
+<br/>
+
+### Built With
 
 * [GithubApi](https://developer.github.com/v3/) 
 
-## Built by
+### Built by
 * [GDGVIT](https://www.gdgvitvellore.com)
 
-## Contributors
+### Contributors
 
 * Shubham Bhardwaj
 * Apurva Nitanjay
