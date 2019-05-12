@@ -1,6 +1,21 @@
 ## GDG-info backend
 For calculating score of all members of any github organisation and top contributors of all repositories.
 
+---
+
+<br/>
+
+### Some features
+
+- [X] GitHub Graph API
+- [X] Interchangable organization leaderboard
+- [X] Top contributors for organizations
+- [X] Repo specific metadata for organizatiom
+- [X] Pluggable caching layer 
+- [X] Automatic Scheduled cache update
+- [X] Manual cache update
+
+<br/>
 
 ### Getting Started
 
