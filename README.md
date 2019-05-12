@@ -34,6 +34,7 @@ echo "REDIS_URL=<your redis URL>" >> .env # optional
 ```
 
 <br/>
+
 ### Ways to run
 
 *	Regular mode: run this if you do not want a caching layer in your application. Will drastically increase response time but save the cost of having a caching service
@@ -51,7 +52,7 @@ python3 api_server.py --with-cache
 
 ## How it works
 
-`Algorithm`: It uses github api and fetches the information about members, all the repositories in that organization, 
+*Algorithm*: It uses github api and fetches the information about members, all the repositories in that organization, 
 members contribution in those repository.
 The application scrolls through all the repositories that belong to this organization.
 and using that it calculates contribution a particular individual based on his contribution to that repository.
@@ -71,7 +72,7 @@ d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + 
 ```
 <br/>
 
-`Caching`: When the *--with-cache* flag is provided, all responses are served from a cache. This cache is updated daily. This significantly decreases response latency since github api provides only 10 requests per minute. 
+*Caching*: When the *--with-cache* flag is provided, all responses are served from a cache. This cache is updated daily. This significantly decreases response latency since github api provides only 10 requests per minute. 
 
 
 <br/>
