@@ -1,6 +1,5 @@
 # GDGINFO-Backend
-
-This is the backend for *[GDGVITinfo](https://info.gdgvitvellore.com) used for calculating score of all members of GDGVIT github organisation and top contributors of all repository.
+For calculating score of all members of any github organisation and top contributors of all repositories.
 
 
 ## Getting Started
@@ -37,22 +36,22 @@ echo "REDIS_URL=<your redis URL>" >> .env # optional
 
 ### Ways to run
 
-*	Regular mode: run this if you do not want a caching layer in your application. Will drastically increase response time but save the cost of having a caching service
+*	**Regular mode**: run this if you do not want a caching layer in your application. Will drastically increase response time but save the cost of having a caching service
 
 ```
-python3 api_server.py
+python api_server.py
 ```
 
-* Caching mode: run this if you want a caching layer in your application. Will drastically decrease response latency.
+* **Caching mode**: run this if you want a caching layer in your application. Will drastically decrease response latency.
 
 ```
-python3 api_server.py --with-cache
+python api_server.py --with-cache
 ```
 <br/>
 
 ## How it works
 
-*Algorithm*: It uses github api and fetches the information about members, all the repositories in that organization, 
+**Algorithm**: It uses github api and fetches the information about members, all the repositories in that organization, 
 members contribution in those repository.
 The application scrolls through all the repositories that belong to this organization.
 and using that it calculates contribution a particular individual based on his contribution to that repository.
@@ -72,7 +71,7 @@ d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + 
 ```
 <br/>
 
-*Caching*: When the *--with-cache* flag is provided, all responses are served from a cache. This cache is updated daily. This significantly decreases response latency since github api provides only 10 requests per minute. 
+**Caching**: When the *--with-cache* flag is provided, all responses are served from a cache. This cache is updated daily. This significantly decreases response latency since github api provides only 10 requests per minute. 
 
 
 <br/>
@@ -86,7 +85,7 @@ d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + 
 
 ## Contributors
 
-Shubham Bhardwaj
-Apurva Nitanjay
-Angad Sharma
+* Shubham Bhardwaj
+* Apurva Nitanjay
+* Angad Sharma
 
