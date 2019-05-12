@@ -113,6 +113,31 @@ class Repos(RequestHandler):
         self.set_status(204)
         self.finish()
 
+class ManualSeed(RequestHandler):
+    def initialize(self, redis, token, org):
+        self.token = token
+        self.org = org
+        self.redis = redis
+    def set_default_headers(self):
+        print("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    @coroutine
+    def get(self):
+        utility.cache_response(token, org, redis)
+        self.write("Cache seeded")
+    def write_error(self, status_code, **kwargs):
+        jsonData = {
+            'status': int(status_code),
+            'message': "Internal server error",
+            'answer': 'NULL'
+        }
+        self.write(json.dumps(jsonData))
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
+
 
 settings = dict(
     debug=True
@@ -141,7 +166,8 @@ if __name__ == "__main__":
     # starting application
     application = Application([(r'/leaderboard', LeaderBoard, dict(redis=r, token=token, org=org)),
                            (r'/topcontributors', TopContributors, dict(redis=r, token=token, org=org)),
-                           (r'/repos', Repos, dict(redis=r, token=token, org=org))
+                           (r'/repos', Repos, dict(redis=r, token=token, org=org)),
+                           (r'/seed', ManualSeed, dict(redis=r, token=token, org=org)
                            ], **settings)
     server = HTTPServer(application)
     server.listen(os.environ.get("PORT", 5000))
