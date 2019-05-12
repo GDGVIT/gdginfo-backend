@@ -124,7 +124,7 @@ class ManualSeed(RequestHandler):
         self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
     @coroutine
     def get(self):
-        utility.cache_response(token, org, redis)
+        utility.cache_response(self.token, self.org, self.redis)
         self.write("Cache seeded")
     def write_error(self, status_code, **kwargs):
         jsonData = {
@@ -154,7 +154,7 @@ if __name__ == "__main__":
         if r is None:
             print("[ERROR] cannot connect to caching layer")
             exit(2)
-        utility.cache_response(token, org, r) # seed cache
+        utility.cache_response(token=token, org=org, rd=r) # seed cache
         cron.start_cache_job(token, org, r)
     else:
         r = None
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     application = Application([(r'/leaderboard', LeaderBoard, dict(redis=r, token=token, org=org)),
                            (r'/topcontributors', TopContributors, dict(redis=r, token=token, org=org)),
                            (r'/repos', Repos, dict(redis=r, token=token, org=org)),
-                           (r'/seed', ManualSeed, dict(redis=r, token=token, org=org)
+                           (r'/seed', ManualSeed, dict(redis=r, token=token, org=org))
                            ], **settings)
     server = HTTPServer(application)
     server.listen(os.environ.get("PORT", 5000))

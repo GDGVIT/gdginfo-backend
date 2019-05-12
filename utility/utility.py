@@ -55,17 +55,16 @@ def extract_repos(token, org, redis):
             pass
     return repos
 
-def cache_response(token, org, redis):
+def cache_response(token, org, rd):
     print("[RUNNING] cache_response")
-    try:
-        data = extract_repos(token, org, redis)
-        pickled_object = pickle.dumps(data)
-        if not redis.set(org, pickled_object):
-            print("[ERROR] setting in redis: cache_response")
-        print("[COMPLETED] cache_response")
-    except:
-        print("[FAILED] cache_response")
-
+    data = extract_repos(token, org, rd)
+    pickled_object = pickle.dumps(data)
+    print(rd)
+    if not rd.set(org, pickled_object):
+        print("[ERROR] setting in redis: cache_response")
+    else:
+       print("[COMPLETED] cache_response")
+    
 
 def get_cached_response(org, redis):
     print("[RUNNING] get_cached_response")
