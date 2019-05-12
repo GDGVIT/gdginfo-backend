@@ -4,7 +4,7 @@ import datetime
 import pickle
 
 def extract_repos(token, org, redis):
-
+    print("[RUNNING] extract_repos")
     url = 'https://api.github.com/graphql'
     headers = {'Authorization': 'token %s' % token}
     time = datetime.datetime.utcnow() - datetime.timedelta(days=15)
@@ -56,12 +56,19 @@ def extract_repos(token, org, redis):
     return repos
 
 def cache_response(token, org, redis):
-    data = extract_repos(token, org, redis)
-    pickled_object = pickle.dumps(data)
-    redis.set(org, pickled_object)
-    
+    print("[RUNNING] cache_response")
+    try:
+        data = extract_repos(token, org, redis)
+        pickled_object = pickle.dumps(data)
+        if not redis.set(org, pickled_object):
+            print("[ERROR] setting in redis: cache_response")
+        print("[COMPLETED] cache_response")
+    except:
+        print("[FAILED] cache_response")
+
 
 def get_cached_response(org, redis):
+    print("[RUNNING] get_cached_response")
     unpacked_pickled_object = pickle.loads(redis.get(org))
     return unpacked_pickled_object
 

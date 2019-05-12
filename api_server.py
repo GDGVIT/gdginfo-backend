@@ -9,7 +9,7 @@ import json
 import os
 import sys
 import redis
-from bin import utility
+from utility import utility, cron
 from dotenv import load_dotenv
 from os.path import join, dirname
 from pathlib import Path  # python3 only
@@ -123,16 +123,22 @@ settings = dict(
 
 if __name__ == "__main__":
     load_dotenv(dotenv_path="./.env", verbose=True)
-    if len(sys.argv) > 1 and sys.argv[1] == "--with-cache":
-        r = redis.from_url(os.environ.get("REDIS_URL"))
-    else:
-        r = None
     token = os.environ.get("TOKEN")
     org = os.environ.get("ORGANIZATION")
-
+    if len(sys.argv) > 1 and sys.argv[1] == "--with-cache":
+        r = redis.from_url(os.environ.get("REDIS_URL"))
+        if r is None:
+            print("[ERROR] cannot connect to caching layer")
+            exit(2)
+        cron.start_cache_job(token, org, r)
+    else:
+        r = None
+   
     if token is None or org is None:
         print("Token or Organization was null")
         exit(1)
+    
+    # starting application
     application = Application([(r'/leaderboard', LeaderBoard, dict(redis=r, token=token, org=org)),
                            (r'/topcontributors', TopContributors, dict(redis=r, token=token, org=org)),
                            (r'/all', Repos, dict(redis=r, token=token, org=org))
