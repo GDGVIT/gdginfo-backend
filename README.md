@@ -1,8 +1,8 @@
-# GDGINFO-Backend
+## GDG-info backend
 For calculating score of all members of any github organisation and top contributors of all repositories.
 
 
-## Getting Started
+### Getting Started
 
 You can use this application easily just by changing the following credentials..
 
