@@ -21,6 +21,10 @@ def cache_job(token, org, redis):
         time.sleep(60*60)
 def start_cache_job(token, org, redis):
     # starting cache cron as a separate thread
+    print("Token: ")
+    print(token)
+    print("Redis: ")
+    print(redis)
     t = ScheduleCache(cache_job, token, org, redis)
     t.start()
     print("[STARTED] cache_job")
