@@ -1,1 +1,1 @@
-web: python ./bin/utility.py
+web: python api_server.py --with-cache

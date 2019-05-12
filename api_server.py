@@ -11,8 +11,6 @@ import sys
 import redis
 from utility import utility, cron
 from dotenv import load_dotenv
-from os.path import join, dirname
-from pathlib import Path  # python3 only
 
 
 
