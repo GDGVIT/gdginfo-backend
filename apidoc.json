@@ -1,0 +1,11 @@
+{
+    "name": "github-orgs-api documentation",
+    "version": "0.1.0",
+    "description": "Motivating organizations since inception",
+    "title": "",
+    "url":"http://<where-it-is-deployed>",
+    "template": {
+        "withCompare": true,
+        "withGenerator": true
+    }
+}
