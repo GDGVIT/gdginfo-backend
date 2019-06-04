@@ -1,7 +1,9 @@
 ## github-orgs-api
+---
+
 For calculating score of all members of any github organisation and top contributors of all repositories.
 
----
+[![view original](https://img.shields.io/badge/upstream-view%20source%20repo-orange.svg)](https://github.com/GDGVIT/gdginfo-backend.git)
 
 <br/>
 

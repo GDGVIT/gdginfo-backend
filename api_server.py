@@ -13,7 +13,26 @@ from utility import utility, cron
 from dotenv import load_dotenv
 
 
-
+"""
+@api {get} /leaderboard org leaderboard 
+@apiName org leaderboard
+@apiGroup all
+@apiParamExample {json} response-example
+{
+    status: 200,
+    message: "OK",
+    payload: {
+        L04DB4L4NC3R: 82,
+        Angad Sharma: 16816,
+        bhaveshgoyal27: 19,
+        dependabot-preview[bot]: 3743,
+        shashu421: 2150,
+        HRITISHA: 1105,
+        alan478: 8805,
+        Krishn157: 930
+    }
+}
+"""
 class LeaderBoard(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
@@ -48,7 +67,29 @@ class LeaderBoard(RequestHandler):
         self.set_status(204)
         self.finish()
         
-
+"""
+@api {get} /topcontributors top contributors of the org
+@apiName top contributors of the org
+@apiGroup all
+@apiParamExample {json} response-example
+{
+    status: 200,
+    message: "OK",
+    payload: {
+        CodeCombat: "Angad Sharma",
+        skin-cancer-detection: "shashu421",
+        cc-website-prototype-19: "HRITISHA",
+        github-orgs-api: "Angad Sharma",
+        digital-beacon: "Angad Sharma",
+        vit-tourist-guide: "alan478",
+        DevSoc2K19-Website: "Angad Sharma",
+        love-open-source: "Angad Sharma",
+        notes-map-analytics: "Angad Sharma",
+        smart-park: "Angad Sharma",
+        webinars: "L04DB4L4NC3R"
+    }
+}
+"""
 class TopContributors(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
@@ -82,7 +123,37 @@ class TopContributors(RequestHandler):
         self.set_status(204)
         self.finish()
 
-
+"""
+@api {get} /repos data related to repos
+@apiName data related to repos
+@apiGroup all
+@apiParamExample {json} response-example
+{
+    status: 200,
+    message: "OK",
+    payload: [
+        {
+            ref: {
+                target: {
+                    history: {
+                        edges: [
+                                    {
+                                        node: {
+                                            deletions: 1,
+                                            additions: 1,
+                                            author: {
+                                                date: "2019-06-04T20:37:49+05:30",
+                                                name: "Angad Sharma"
+                                                }
+                                        }
+                                    }
+                                ]
+                            }
+                    }
+            },
+            name: "github-orgs-api"
+            }]
+"""
 class Repos(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
@@ -113,6 +184,11 @@ class Repos(RequestHandler):
         self.set_status(204)
         self.finish()
 
+"""
+@api {get} /seed manually seed cache 
+@apiName manually seed cache
+@apiGroup all
+"""
 class ManualSeed(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
