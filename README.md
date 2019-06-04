@@ -3,7 +3,7 @@
 
 For calculating score of all members of any github organisation and top contributors of all repositories.
 
-[![view original](https://img.shields.io/badge/upstream-view%20source%20repo-orange.svg)](https://github.com/GDGVIT/gdginfo-backend.git) [![docs](https://img.shields.io/badge/docs-view%20API%20documentation-brightgreen.svg)](https://codechefvit.github.io/github-orgs-api/) [![deployment](https://img.shields.io/badge/deployment-go%20to%20API%20endpoint-yellow.svg)](https://cc-leaderboard.herokuapp.com/)
+[![view original](https://img.shields.io/badge/upstream-view%20source%20repo-orange.svg)](https://github.com/GDGVIT/gdginfo-backend.git) [![docs](https://img.shields.io/badge/docs-view%20API%20documentation-brightgreen.svg)](https://l04db4l4nc3r.github.io/github-orgs-api/) [![deployment](https://img.shields.io/badge/deployment-go%20to%20API%20endpoint-yellow.svg)](https://info.dscvit.com/)
 
 <br/>
 
