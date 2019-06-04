@@ -137,6 +137,25 @@ class ManualSeed(RequestHandler):
         self.set_status(204)
         self.finish()
 
+class Welcome(RequestHandler):
+    def set_default_headers(self):
+        print("setting headers!!!")
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    @coroutine
+    def get(self):
+        self.write("Hello world")
+    def write_error(self, status_code, **kwargs):
+        jsonData = {
+            'status': int(status_code),
+            'message': "Internal server error",
+            'answer': 'NULL'
+        }
+        self.write(json.dumps(jsonData))
+    def options(self):
+        self.set_status(204)
+        self.finish()
+
 
 
 settings = dict(
@@ -167,7 +186,8 @@ if __name__ == "__main__":
     application = Application([(r'/leaderboard', LeaderBoard, dict(redis=r, token=token, org=org)),
                            (r'/topcontributors', TopContributors, dict(redis=r, token=token, org=org)),
                            (r'/repos', Repos, dict(redis=r, token=token, org=org)),
-                           (r'/seed', ManualSeed, dict(redis=r, token=token, org=org))
+                           (r'/seed', ManualSeed, dict(redis=r, token=token, org=org)),
+                           (r'/', Welcome)
                            ], **settings)
     server = HTTPServer(application)
     server.listen(os.environ.get("PORT", 5000))
