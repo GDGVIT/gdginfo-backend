@@ -1,4 +1,4 @@
-## GDG-info backend
+## github-orgs-api
 For calculating score of all members of any github organisation and top contributors of all repositories.
 
 ---
