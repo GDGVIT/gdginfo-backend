@@ -1,11 +1,12 @@
-from tornado.web import RequestHandler 
-from tornado.gen import coroutine
-from utility import utility
 import simplejson as json
+from tornado.gen import coroutine
+from tornado.web import RequestHandler
+
+from utility import utility
 
 
 """
-@api {get} /leaderboard org leaderboard 
+@api {get} /leaderboard org leaderboard
 @apiName org leaderboard
 @apiGroup all
 @apiParamExample {json} response-example
@@ -24,6 +25,8 @@ import simplejson as json
     }
 }
 """
+
+
 class LeaderBoard(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
@@ -45,7 +48,7 @@ class LeaderBoard(RequestHandler):
             'payload': res
         }
         self.write(json.dumps(jsonData))
-        
+
     def write_error(self, status_code, **kwargs):
         jsonData = {
             'status': int(status_code),
@@ -82,6 +85,8 @@ class LeaderBoard(RequestHandler):
     }
 }
 """
+
+
 class TopContributors(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
@@ -92,18 +97,18 @@ class TopContributors(RequestHandler):
         print("setting headers!!!")
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-    
+
     @coroutine
     def get(self):
         response = utility.topcontributor(self.token, self.org, self.redis)
         jsonData = {
-            'status' : 200,
-            'message' : 'OK',
-            'payload' : response
-        
+            'status': 200,
+            'message': 'OK',
+            'payload': response
+
         }
         self.write(json.dumps(jsonData))
-        
+
     def write_error(self, status_code, **kwargs):
         jsonData = {
             'status': int(status_code),
@@ -111,6 +116,7 @@ class TopContributors(RequestHandler):
             'answer': 'NULL'
         }
         self.write(json.dumps(jsonData))
+
     def options(self):
         self.set_status(204)
         self.finish()

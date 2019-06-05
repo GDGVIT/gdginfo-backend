@@ -1,19 +1,17 @@
+import logging
+
+import simplejson as json
+import tornado.gen
 import tornado.httpclient
 import tornado.ioloop
-import tornado.web
 import tornado.options
-import tornado.gen
-from tornado.httputil import url_concat
-
-
+import tornado.web
 import torngithub
-from torngithub import json_encode, json_decode
-
-import logging
-import simplejson as json
-
+from tornado.httputil import url_concat
+from torngithub import json_decode, json_encode
 
 log = logging.getLogger("github.demo")
+
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -32,6 +30,8 @@ class BaseHandler(tornado.web.RequestHandler):
     "token:"uhgdfsuadrhgasuighdiu"
 }
 """
+
+
 class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
     @tornado.gen.coroutine
     def get(self):
@@ -61,7 +61,7 @@ class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
         yield self.authorize_redirect(
             redirect_uri=redirect_uri,
             client_id=self.settings["github_client_id"],
-            extra_params={"scope": self.settings['github_scope'], "foo":1})
+            extra_params={"scope": self.settings['github_scope'], "foo": 1})
 
 
 class GetToken(BaseHandler, torngithub.GithubMixin):
@@ -69,8 +69,9 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
     @tornado.web.asynchronous
     @tornado.gen.coroutine
     def get(self):
-        #print(self.get_auth_client())
-        self.write(json.dumps({'token':self.current_user['access_token']}))
+        # print(self.get_auth_client())
+        self.write(json.dumps({'token': self.current_user['access_token']}))
+
 
 class LogoutHandler(BaseHandler):
     def get(self):
