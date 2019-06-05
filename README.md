@@ -56,7 +56,7 @@ Clone the repository and add the above credentials.
 ```bash
 git clone https://github.com/GDGVIT/gdginfo-backend.git
 cd gdginfo-backend
-pip3 install -r requirements.txt
+make
 # CREATE .env
 ```
 
@@ -67,13 +67,28 @@ pip3 install -r requirements.txt
 *	**Regular mode**: run this if you do not want a caching layer in your application. Will drastically increase response time but save the cost of having a caching service
 
 ```
-python app.py
+./app
 ```
 
 * **Caching mode**: run this if you want a caching layer in your application. Will drastically decrease response latency.
 
 ```
-python app.py --with-cache
+./app --with-cache
+```
+<br/>
+
+### Clean
+Uninstall all requirements that were installed while making this project. 
+```
+make clean
+```
+
+<br/>
+
+### Generate docs
+Generate documentation based on comment descriptions on the APIs. This uses `apidoc` and requires `npm`.
+```
+make docs
 ```
 <br/>
 
