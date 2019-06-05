@@ -1,7 +1,9 @@
-## GDG-info backend
+## github-orgs-api
+---
+
 For calculating score of all members of any github organisation and top contributors of all repositories.
 
----
+[![view original](https://img.shields.io/badge/upstream-view%20source%20repo-orange.svg)](https://github.com/GDGVIT/gdginfo-backend.git) [![docs](https://img.shields.io/badge/docs-view%20API%20documentation-brightgreen.svg)](https://l04db4l4nc3r.github.io/github-orgs-api/) [![deployment](https://img.shields.io/badge/deployment-go%20to%20API%20endpoint-yellow.svg)](https://info.dscvit.com/)
 
 <br/>
 
@@ -14,6 +16,7 @@ For calculating score of all members of any github organisation and top contribu
 - [X] Pluggable caching layer 
 - [X] Automatic Scheduled cache update
 - [X] Manual cache update
+- [X] GitHub Oauth
 
 <br/>
 
@@ -36,6 +39,12 @@ ORGANIZATION=<Name of the organization as specified in GitHub>
 
 # redis URI
 REDIS_URL=<your redis url>
+
+# GitHub client ID
+GITHUB_CLIENT_ID=<your-id>
+
+# GitHub client secret
+GITHUB_CLIENT_SECRET=<your-secret>
 ```
 
 <br/>
@@ -47,9 +56,8 @@ Clone the repository and add the above credentials.
 ```bash
 git clone https://github.com/GDGVIT/gdginfo-backend.git
 cd gdginfo-backend
-echo "TOKEN=<your-github-access-token>" > .env
-echo "ORGANIZATION=<your-github-ORG>" >> .env
-echo "REDIS_URL=<your redis URL>" >> .env # optional
+pip3 install -r requirements.txt
+# CREATE .env
 ```
 
 <br/>
@@ -59,13 +67,13 @@ echo "REDIS_URL=<your redis URL>" >> .env # optional
 *	**Regular mode**: run this if you do not want a caching layer in your application. Will drastically increase response time but save the cost of having a caching service
 
 ```
-python api_server.py
+python app.py
 ```
 
 * **Caching mode**: run this if you want a caching layer in your application. Will drastically decrease response latency.
 
 ```
-python api_server.py --with-cache
+python app.py --with-cache
 ```
 <br/>
 
