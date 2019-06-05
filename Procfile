@@ -1,1 +1,1 @@
-web: python api_server.py --with-cache
+web: python3 app --with-cache
