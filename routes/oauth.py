@@ -29,18 +29,7 @@ class BaseHandler(tornado.web.RequestHandler):
 @apiGroup all
 @apiParamExample {json} response-example
 {
-    status: 200,
-    message: "OK",
-    payload: {
-        L04DB4L4NC3R: 82,
-        Angad Sharma: 16816,
-        bhaveshgoyal27: 19,
-        dependabot-preview[bot]: 3743,
-        shashu421: 2150,
-        HRITISHA: 1105,
-        alan478: 8805,
-        Krishn157: 930
-    }
+    "token:"uhgdfsuadrhgasuighdiu"
 }
 """
 class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
