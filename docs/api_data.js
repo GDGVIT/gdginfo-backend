@@ -15,7 +15,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./routes/repos.py",
+    "filename": "routes/repos.py",
     "groupTitle": "all"
   },
   {
@@ -34,7 +34,17 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./routes/oauth.py",
+    "filename": "routes/oauth.py",
+    "groupTitle": "all"
+  },
+  {
+    "type": "get",
+    "url": "/logout",
+    "title": "logout",
+    "name": "logout",
+    "group": "all",
+    "version": "0.0.0",
+    "filename": "routes/oauth.py",
     "groupTitle": "all"
   },
   {
@@ -44,7 +54,7 @@ define({ "api": [
     "name": "manually_seed_cache",
     "group": "all",
     "version": "0.0.0",
-    "filename": "./routes/seed.py",
+    "filename": "routes/seed.py",
     "groupTitle": "all"
   },
   {
@@ -63,7 +73,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./routes/leaderboard.py",
+    "filename": "routes/leaderboard.py",
     "groupTitle": "all"
   },
   {
@@ -82,7 +92,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./routes/leaderboard.py",
+    "filename": "routes/leaderboard.py",
     "groupTitle": "all"
   }
 ] });

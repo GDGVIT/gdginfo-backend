@@ -3,7 +3,7 @@
 
 For calculating score of all members of any github organisation and top contributors of all repositories.
 
-[![view original](https://img.shields.io/badge/upstream-view%20source%20repo-orange.svg)](https://github.com/GDGVIT/gdginfo-backend.git) [![docs](https://img.shields.io/badge/docs-view%20API%20documentation-brightgreen.svg)](https://l04db4l4nc3r.github.io/github-orgs-api/) [![deployment](https://img.shields.io/badge/deployment-go%20to%20API%20endpoint-yellow.svg)](https://info.dscvit.com/)
+[![view original](https://img.shields.io/badge/upstream-view%20source%20repo-orange.svg)](https://github.com/GDGVIT/gdginfo-backend.git) [![docs](https://img.shields.io/badge/docs-view%20API%20documentation-brightgreen.svg)](https://l04db4l4nc3r.github.io/github-orgs-api/)
 
 <br/>
 
@@ -54,10 +54,14 @@ GITHUB_CLIENT_SECRET=<your-secret>
 Clone the repository and add the above credentials.
 
 ```bash
-git clone https://github.com/GDGVIT/gdginfo-backend.git
-cd gdginfo-backend
-pip3 install -r requirements.txt
-# CREATE .env
+# Clone the repo
+$ git clone https://github.com/GDGVIT/gdginfo-backend.git
+
+# Navigate into it
+$ cd gdginfo-backend
+
+# Bootstrap
+$ make
 ```
 
 <br/>
@@ -67,13 +71,30 @@ pip3 install -r requirements.txt
 *	**Regular mode**: run this if you do not want a caching layer in your application. Will drastically increase response time but save the cost of having a caching service
 
 ```
-python app.py
+$ ./app
 ```
+
+<br/>
 
 * **Caching mode**: run this if you want a caching layer in your application. Will drastically decrease response latency.
 
 ```
-python app.py --with-cache
+$ ./app --with-cache
+```
+<br/>
+
+### Clean
+Uninstall all requirements that were installed while making this project. 
+```
+$ make clean
+```
+
+<br/>
+
+### Generate docs
+Generate documentation based on comment descriptions on the APIs. This uses `apidoc` and requires `npm`.
+```
+$ make docs
 ```
 <br/>
 
@@ -108,6 +129,14 @@ d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + 
 
 * Only 30 repositories can be fetched from the API at one time.
 * Only 10 requests can be made to the API per minute.
+
+<br/>
+
+### Mitigation
+
+* Pluggable caching layer
+* Manual cache seed
+* CRON-ed cache seed
 
 <br/>
 
