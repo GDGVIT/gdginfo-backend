@@ -78,7 +78,7 @@ def main():
         cookie_secret="asdf",
         login_url="/oauth",
         xsrf_cookies=True,
-        github_client_id=GITHUB_CLIENT_SECRET,
+        github_client_id=GITHUB_CLIENT_ID,
         github_client_secret=GITHUB_CLIENT_SECRET,
         github_callback_path="/oauth",
         github_scope="",
@@ -91,7 +91,7 @@ def main():
 
     print("Listening....")
     application = tornado.web.Application(handlers, **settings)
-    application.listen(5000)
+    application.listen(3000)
     tornado.ioloop.IOLoop().instance().start()
 
 

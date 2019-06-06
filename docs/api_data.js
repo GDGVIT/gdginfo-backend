@@ -39,6 +39,16 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/logout",
+    "title": "logout",
+    "name": "logout",
+    "group": "all",
+    "version": "0.0.0",
+    "filename": "routes/oauth.py",
+    "groupTitle": "all"
+  },
+  {
+    "type": "get",
     "url": "/seed",
     "title": "manually seed cache",
     "name": "manually_seed_cache",

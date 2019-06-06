@@ -25,8 +25,6 @@ from utility import utility
     }
 }
 """
-
-
 class LeaderBoard(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
@@ -85,8 +83,6 @@ class LeaderBoard(RequestHandler):
     }
 }
 """
-
-
 class TopContributors(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token

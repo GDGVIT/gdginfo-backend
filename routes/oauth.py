@@ -30,8 +30,6 @@ class BaseHandler(tornado.web.RequestHandler):
     "token:"uhgdfsuadrhgasuighdiu"
 }
 """
-
-
 class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
     @tornado.gen.coroutine
     def get(self):
@@ -72,7 +70,11 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
         # print(self.get_auth_client())
         self.write(json.dumps({'token': self.current_user['access_token']}))
 
-
+"""
+@api {get} /logout logout
+@apiName logout
+@apiGroup all
+"""
 class LogoutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("user")

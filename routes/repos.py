@@ -36,8 +36,6 @@ from utility import utility
             name: "github-orgs-api"
             }]
 """
-
-
 class Repos(RequestHandler):
     def initialize(self, redis, token, org):
         self.token = token
@@ -51,6 +49,11 @@ class Repos(RequestHandler):
 
     @coroutine
     def get(self):
+        #user = self.get_secure_cookie("user")
+        #if user is None or not user:
+            #self.redirect("/oauth")
+        #data = json.loads(user)
+        #print(data["access_token"])
         response = utility.repos(self.token, self.org, self.redis)
         jsonData = {
             'status': 200,
