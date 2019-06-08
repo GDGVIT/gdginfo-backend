@@ -67,10 +67,10 @@ def main():
         (r"/token", oauth.GetToken),
         (r"/oauth", oauth.GithubLoginHandler),
         (r"/logout", oauth.LogoutHandler),
-        ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r, token=token, org=org)),
-        (r'/topcontributors', leaderboard.TopContributors, dict(redis=r, token=token, org=org)),
-        (r'/repos', repos.Repos, dict(redis=r, token=token, org=org)),
-        (r'/seed', seed.ManualSeed, dict(redis=r, token=token, org=org)),
+        ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r, org=org)),
+        (r'/topcontributors', leaderboard.TopContributors, dict(redis=r, org=org)),
+        (r'/repos', repos.Repos, dict(redis=r, org=org)),
+        (r'/seed', seed.ManualSeed, dict(redis=r, org=org)),
         (r'/orgs', orgs.Orgs),
         (r'/', Welcome)
     ]

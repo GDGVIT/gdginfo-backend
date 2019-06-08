@@ -22,8 +22,8 @@ class BaseHandler(tornado.web.RequestHandler):
 
 
 """
-@api {get} /oauth get access token
-@apiName get access token
+@api {get} /oauth generate access token
+@apiName generate access token
 @apiGroup all
 @apiParamExample {json} response-example
 {
@@ -61,7 +61,16 @@ class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
             client_id=self.settings["github_client_id"],
             extra_params={"scope": self.settings['github_scope'], "foo": 1})
 
-
+"""
+@api {get} /oauth get access token
+@apiName get access token
+@apiGroup all
+@apiPermission logged-in
+@apiParamExample {json} response-example
+{
+    "token:"uhgdfsuadrhgasuighdiu"
+}
+"""
 class GetToken(BaseHandler, torngithub.GithubMixin):
     @tornado.web.authenticated
     @tornado.web.asynchronous
@@ -73,6 +82,7 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
 """
 @api {get} /logout logout
 @apiName logout
+@apiPermission logged-in
 @apiGroup all
 """
 class LogoutHandler(BaseHandler):

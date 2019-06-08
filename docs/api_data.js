@@ -5,6 +5,11 @@ define({ "api": [
     "title": "data related to repos",
     "name": "data_related_to_repos",
     "group": "all",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "parameter": {
       "examples": [
         {
@@ -21,9 +26,57 @@ define({ "api": [
   {
     "type": "get",
     "url": "/oauth",
+    "title": "generate access token",
+    "name": "generate_access_token",
+    "group": "all",
+    "parameter": {
+      "examples": [
+        {
+          "title": "response-example",
+          "content": "{\n    \"token:\"uhgdfsuadrhgasuighdiu\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/oauth.py",
+    "groupTitle": "all"
+  },
+  {
+    "type": "get",
+    "url": "/orgs",
+    "title": "get a list of organizations",
+    "name": "get_a_list_of_organizations",
+    "group": "all",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
+    "parameter": {
+      "examples": [
+        {
+          "title": "response-example",
+          "content": "{\n  \"data\": {\n    \"viewer\": {\n      \"organizations\": {\n        \"nodes\": [\n          {\n            \"name\": \"DSC VIT Vellore\",\n            \"url\": \"https://github.com/GDGVIT\",\n            \"login\": \"GDGVIT\",\n            \"avatarUrl\": \"https://avatars0.githubusercontent.com/u/11557748?v=4\",\n            \"websiteUrl\": \"https://dscvit.com/\",\n            \"description\": \"Google Developers Group VIT\"\n          },\n          {\n            \"name\": \"CodeChef - VIT Vellore\",\n            \"url\": \"https://github.com/CodeChefVIT\",\n            \"login\": \"CodeChefVIT\",\n            \"avatarUrl\": \"https://avatars2.githubusercontent.com/u/31820857?v=4\",\n            \"websiteUrl\": \"www.codechefvit.com\",\n            \"description\": \"CodeChef is a technical chapter in VIT University Vellore that helps students all over the campus to improve their coding skills.\"\n          }\n        ]\n      }\n    }\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/orgs.py",
+    "groupTitle": "all"
+  },
+  {
+    "type": "get",
+    "url": "/oauth",
     "title": "get access token",
     "name": "get_access_token",
     "group": "all",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "parameter": {
       "examples": [
         {
@@ -42,6 +95,11 @@ define({ "api": [
     "url": "/logout",
     "title": "logout",
     "name": "logout",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "group": "all",
     "version": "0.0.0",
     "filename": "routes/oauth.py",
@@ -52,6 +110,11 @@ define({ "api": [
     "url": "/seed",
     "title": "manually seed cache",
     "name": "manually_seed_cache",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "group": "all",
     "version": "0.0.0",
     "filename": "routes/seed.py",
@@ -63,6 +126,11 @@ define({ "api": [
     "title": "org leaderboard",
     "name": "org_leaderboard",
     "group": "all",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "parameter": {
       "examples": [
         {
@@ -82,6 +150,11 @@ define({ "api": [
     "title": "top contributors of the org",
     "name": "top_contributors_of_the_org",
     "group": "all",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "parameter": {
       "examples": [
         {

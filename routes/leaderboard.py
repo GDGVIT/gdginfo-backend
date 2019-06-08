@@ -9,6 +9,7 @@ from utility import utility
 @api {get} /leaderboard org leaderboard
 @apiName org leaderboard
 @apiGroup all
+@apiPermission logged-in
 @apiParamExample {json} response-example
 {
     status: 200,
@@ -26,8 +27,7 @@ from utility import utility
 }
 """
 class LeaderBoard(RequestHandler):
-    def initialize(self, redis, token, org):
-        self.token = token
+    def initialize(self, redis, org):
         self.org = org
         self.redis = redis
 
@@ -38,7 +38,13 @@ class LeaderBoard(RequestHandler):
 
     @coroutine
     def get(self):
-        res = utility.leaderboard(self.token, self.org, self.redis)
+        user = self.get_secure_cookie("user")
+        if user is None or not user:
+            self.write("You are not logged in")
+            return
+        data = json.loads(user)
+        token = data["access_token"]
+        res = utility.leaderboard(token, self.org, self.redis)
 
         jsonData = {
             'status': 200,
@@ -64,6 +70,7 @@ class LeaderBoard(RequestHandler):
 @api {get} /topcontributors top contributors of the org
 @apiName top contributors of the org
 @apiGroup all
+@apiPermission logged-in
 @apiParamExample {json} response-example
 {
     status: 200,
@@ -84,8 +91,7 @@ class LeaderBoard(RequestHandler):
 }
 """
 class TopContributors(RequestHandler):
-    def initialize(self, redis, token, org):
-        self.token = token
+    def initialize(self, redis, org):
         self.org = org
         self.redis = redis
 
@@ -96,7 +102,14 @@ class TopContributors(RequestHandler):
 
     @coroutine
     def get(self):
-        response = utility.topcontributor(self.token, self.org, self.redis)
+        user = self.get_secure_cookie("user")
+        if user is None or not user:
+            self.write("You are not logged in")
+            return
+        data = json.loads(user)
+        token = data["access_token"]
+
+        response = utility.topcontributor(token, self.org, self.redis)
         jsonData = {
             'status': 200,
             'message': 'OK',

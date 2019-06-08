@@ -8,11 +8,11 @@ from utility import utility
 """
 @api {get} /seed manually seed cache
 @apiName manually seed cache
+@apiPermission logged-in
 @apiGroup all
 """
 class ManualSeed(RequestHandler):
-    def initialize(self, redis, token, org):
-        self.token = token
+    def initialize(self, redis, org):
         self.org = org
         self.redis = redis
 
@@ -23,7 +23,14 @@ class ManualSeed(RequestHandler):
 
     @coroutine
     def get(self):
-        utility.cache_response(self.token, self.org, self.redis)
+        user = self.get_secure_cookie("user")
+        if user is None or not user:
+            self.write("You are not logged in")
+            return
+        data = json.loads(user)
+        token = data["access_token"]
+
+        utility.cache_response(token, self.org, self.redis)
         self.write("Cache seeded")
 
     def write_error(self, status_code, **kwargs):

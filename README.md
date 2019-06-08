@@ -31,9 +31,6 @@ You can use this application easily just by changing the following credentials..
 This project uses `.env`. To configure, simply make a file named *.env* in the root of your project and add the following lines to it.
 
 ```
-# GitHub token
-TOKEN=<Your github token, under developer settings on GitHub>
-
 # organization handle on GitHub 
 ORGANIZATION=<Name of the organization as specified in GitHub>
 

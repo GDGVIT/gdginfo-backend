@@ -9,6 +9,7 @@ from utility import utility
 @api {get} /repos data related to repos
 @apiName data related to repos
 @apiGroup all
+@apiPermission logged-in
 @apiParamExample {json} response-example
 {
     status: 200,
@@ -37,8 +38,7 @@ from utility import utility
             }]
 """
 class Repos(RequestHandler):
-    def initialize(self, redis, token, org):
-        self.token = token
+    def initialize(self, redis, org):
         self.org = org
         self.redis = redis
 
@@ -49,12 +49,12 @@ class Repos(RequestHandler):
 
     @coroutine
     def get(self):
-        #user = self.get_secure_cookie("user")
-        #if user is None or not user:
-            #self.redirect("/oauth")
-        #data = json.loads(user)
-        #print(data["access_token"])
-        response = utility.repos(self.token, self.org, self.redis)
+        user = self.get_secure_cookie("user")
+        if user is None or not user:
+            self.redirect("/oauth")
+        data = json.loads(user)
+        token = data["access_token"]
+        response = utility.repos(token, self.org, self.redis)
         jsonData = {
             'status': 200,
             'message': 'OK',
