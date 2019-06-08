@@ -11,6 +11,8 @@ from utility import utility
 @apiPermission logged-in
 @apiGroup all
 """
+
+
 class ManualSeed(RequestHandler):
     def initialize(self, redis, org):
         self.org = org

@@ -30,6 +30,10 @@ def extract_repos(token, org, redis):
                                         }
                                         additions
                                         deletions
+                                        pushedDate
+                                        message
+                                        messageBody
+                                        url
                                     }
                                     }
                                 }

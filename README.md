@@ -88,6 +88,14 @@ $ make clean
 
 <br/>
 
+### Linting
+Lint the code according to pep8 heuristics. Good for contributing
+```
+$ make lint
+```
+
+<br/>
+
 ### Generate docs
 Generate documentation based on comment descriptions on the APIs. This uses `apidoc` and requires `npm`.
 ```

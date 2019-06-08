@@ -26,6 +26,8 @@ from utility import utility
     }
 }
 """
+
+
 class LeaderBoard(RequestHandler):
     def initialize(self, redis, org):
         self.org = org
@@ -90,6 +92,8 @@ class LeaderBoard(RequestHandler):
     }
 }
 """
+
+
 class TopContributors(RequestHandler):
     def initialize(self, redis, org):
         self.org = org

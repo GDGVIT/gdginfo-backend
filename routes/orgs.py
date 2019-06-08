@@ -37,11 +37,14 @@ from utility import orgs
   }
 }
 """
+
+
 class Orgs(RequestHandler):
     def set_default_headers(self):
         print("setting headers!!!")
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+
     @coroutine
     def get(self):
         user = self.get_secure_cookie("user")
@@ -69,5 +72,3 @@ class Orgs(RequestHandler):
     def options(self):
         self.set_status(204)
         self.finish()
-
-
