@@ -9,36 +9,41 @@ from utility import utility
 @api {get} /repos data related to repos
 @apiName data related to repos
 @apiGroup all
+@apiPermission logged-in
 @apiParamExample {json} response-example
 {
     status: 200,
     message: "OK",
-    payload: [
+    payload:
         {
-            ref: {
-                target: {
-                    history: {
-                        edges: [
-                                    {
-                                        node: {
-                                            deletions: 1,
-                                            additions: 1,
-                                            author: {
-                                                date: "2019-06-04T20:37:49+05:30",
-                                                name: "Angad Sharma"
-                                                }
-                                        }
-                                    }
-                                ]
-                            }
-                    }
-            },
-            name: "github-orgs-api"
-            }]
+		"name": "CodeCombat",
+		"ref": {
+			"target": {
+				"history": {
+					"edges": [{
+						"node": {
+							"author": {
+								"name": "Angad Sharma",
+								"date": "2019-06-06T08:38:08+05:30"
+							},
+							"additions": 3,
+							"deletions": 27,
+							"pushedDate": "2019-06-06T03:08:09Z",
+							"message": "Merge pull request #8 from CodeChefVIT/dependabot/npm_and_yarn/mongoose-5.5.13\n\nBump mongoose from 5.5.12 to 5.5.13",
+							"messageBody": "\u2026se-5.5.13\n\nBump mongoose from 5.5.12 to 5.5.13",
+							"url": "https://github.com/CodeChefVIT/CodeCombat/commit/60e45681c9baf8b02c2996ffc14442741f0c6fea"
+						}
+					}]
+
+                        }
+                }
+            }
+        }
 """
+
+
 class Repos(RequestHandler):
-    def initialize(self, redis, token, org):
-        self.token = token
+    def initialize(self, redis, org):
         self.org = org
         self.redis = redis
 
@@ -49,12 +54,12 @@ class Repos(RequestHandler):
 
     @coroutine
     def get(self):
-        #user = self.get_secure_cookie("user")
-        #if user is None or not user:
-            #self.redirect("/oauth")
-        #data = json.loads(user)
-        #print(data["access_token"])
-        response = utility.repos(self.token, self.org, self.redis)
+        user = self.get_secure_cookie("user")
+        if user is None or not user:
+            self.redirect("/oauth")
+        data = json.loads(user)
+        token = data["access_token"]
+        response = utility.repos(token, self.org, self.redis)
         jsonData = {
             'status': 200,
             'message': 'OK',

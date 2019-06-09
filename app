@@ -14,7 +14,7 @@ from tornado.gen import coroutine
 from tornado.web import RequestHandler
 
 from dotenv import load_dotenv
-from routes import leaderboard, oauth, repos, seed
+from routes import leaderboard, oauth, repos, seed, orgs
 from utility import cron, utility
 
 load_dotenv(dotenv_path="./.env", verbose=True)
@@ -67,10 +67,11 @@ def main():
         (r"/token", oauth.GetToken),
         (r"/oauth", oauth.GithubLoginHandler),
         (r"/logout", oauth.LogoutHandler),
-        ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r, token=token, org=org)),
-        (r'/topcontributors', leaderboard.TopContributors, dict(redis=r, token=token, org=org)),
-        (r'/repos', repos.Repos, dict(redis=r, token=token, org=org)),
-        (r'/seed', seed.ManualSeed, dict(redis=r, token=token, org=org)),
+        ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r, org=org)),
+        (r'/topcontributors', leaderboard.TopContributors, dict(redis=r, org=org)),
+        (r'/repos', repos.Repos, dict(redis=r, org=org)),
+        (r'/seed', seed.ManualSeed, dict(redis=r, org=org)),
+        (r'/orgs', orgs.Orgs),
         (r'/', Welcome)
     ]
 
@@ -81,7 +82,7 @@ def main():
         github_client_id=GITHUB_CLIENT_ID,
         github_client_secret=GITHUB_CLIENT_SECRET,
         github_callback_path="/oauth",
-        github_scope="",
+        github_scope="read:repo, read:user, read:org",
         debug=True,
         autoescape=None
     )
