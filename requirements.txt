@@ -1,6 +1,6 @@
 tornado==4.5.2
 python-dotenv==0.10.1
-redis==3.2.1
+redis==3.3.7
 schedule==0.4.2
 requests==2.21.0
 simplejson
