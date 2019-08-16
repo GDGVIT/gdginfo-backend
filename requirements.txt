@@ -1,7 +1,7 @@
 tornado==6.0.3
 python-dotenv==0.10.1
 redis==3.3.7
-schedule==0.4.2
+schedule==0.6.0
 requests==2.22.0
 simplejson
 torngithub
