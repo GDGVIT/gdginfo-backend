@@ -1,5 +1,5 @@
 tornado==6.0.3
-python-dotenv==0.10.1
+python-dotenv==0.10.3
 redis==3.3.7
 schedule==0.4.2
 requests==2.22.0
