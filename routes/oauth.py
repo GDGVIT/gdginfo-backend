@@ -89,7 +89,7 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
                     "avatar_url": self.current_user["avatar_url"],
                     "name": self.current_user["name"],
                     "email": self.current_user['email'],
-                    "login": self.current_user['L04DB4L4NC3R'],
+                    "login": self.current_user['login'],
                     "id": self.current_user['id'],
                     "access_token": self.current_user['access_token']
                     },}))
