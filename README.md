@@ -35,7 +35,7 @@ ORGANIZATION=<Name of the organization as specified in GitHub>
 REDIS_URL=<your redis url>
 GITHUB_CLIENT_ID=<your-id>
 GITHUB_CLIENT_SECRET=<your-secret>
-TOKEN=<your-secret>
+TOKEN=<your-github-personal-access-token>
 ```
 
 <br/>
