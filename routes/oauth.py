@@ -23,7 +23,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
 """
 @api {get} /oauth generate access token
-@apiName generate access token
+@apiName Authenticate github
 @apiGroup all
 @apiParamExample {json} response-example
 {
