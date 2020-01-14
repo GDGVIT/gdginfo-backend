@@ -31,17 +31,11 @@ You can use this application easily just by changing the following credentials..
 This project uses `.env`. To configure, simply make a file named *.env* in the root of your project and add the following lines to it.
 
 ```
-# organization handle on GitHub 
 ORGANIZATION=<Name of the organization as specified in GitHub>
-
-# redis URI
 REDIS_URL=<your redis url>
-
-# GitHub client ID
 GITHUB_CLIENT_ID=<your-id>
-
-# GitHub client secret
 GITHUB_CLIENT_SECRET=<your-secret>
+TOKEN=<your-secret>
 ```
 
 <br/>
