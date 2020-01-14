@@ -92,9 +92,7 @@ def main():
 
     print("Listening....")
     application = tornado.web.Application(handlers, **settings)
-    port = os.environ.get("PORT")
-    if (port is None):
-        port = 3000
+    port = os.environ.get("PORT", 3000)
     print("Starting on port ", port)
     application.listen(port)
     tornado.ioloop.IOLoop().instance().start()

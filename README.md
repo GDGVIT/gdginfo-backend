@@ -139,6 +139,12 @@ d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + 
 
 <br/>
 
+### Getting GitHub tokens and secrets
+
+* Go [here](https://github.com/settings/developers) and create a new github app with redirect URL as `<Your base URL>/oauth`. Your base and redirect URL can be localhost also. You'll get a client ID and client secret from here.
+
+* Now go [here](https://github.com/settings/tokens) and create a personal access token with read access to everything. Here youll get your token.
+ 
 ### Built With
 
 * [GithubApi](https://developer.github.com/v3/) 
