@@ -14,7 +14,7 @@
       "examples": [
         {
           "title": "response-example",
-          "content": "{\n    status: 200,\n    message: \"OK\",\n    payload: \n        {\n\"name\": \"CodeCombat\",\n\"ref\": {\n\"target\": {\n\"history\": {\n\"edges\": [{\n\"node\": {\n\"author\": {\n\"name\": \"Angad Sharma\",\n\"date\": \"2019-06-06T08:38:08+05:30\"\n},\n\"additions\": 3,\n\"deletions\": 27,\n\"pushedDate\": \"2019-06-06T03:08:09Z\",\n\"message\": \"Merge pull request #8 from CodeChefVIT/dependabot/npm_and_yarn/mongoose-5.5.13\\n\\nBump mongoose from 5.5.12 to 5.5.13\",\n\"messageBody\": \"\\u2026se-5.5.13\\n\\nBump mongoose from 5.5.12 to 5.5.13\",\n\"url\": \"https://github.com/CodeChefVIT/CodeCombat/commit/60e45681c9baf8b02c2996ffc14442741f0c6fea\"\n}\n}]\n                                    \n                        }\n                }\n            }\n        }",
+          "content": "{\n    status: 200,\n    message: \"OK\",\n    payload:\n        {\n\"name\": \"CodeCombat\",\n\"ref\": {\n\"target\": {\n\"history\": {\n\"edges\": [{\n\"node\": {\n\"author\": {\n\"name\": \"Angad Sharma\",\n\"date\": \"2019-06-06T08:38:08+05:30\"\n},\n\"additions\": 3,\n\"deletions\": 27,\n\"pushedDate\": \"2019-06-06T03:08:09Z\",\n\"message\": \"Merge pull request #8 from CodeChefVIT/dependabot/npm_and_yarn/mongoose-5.5.13\\n\\nBump mongoose from 5.5.12 to 5.5.13\",\n\"messageBody\": \"\\u2026se-5.5.13\\n\\nBump mongoose from 5.5.12 to 5.5.13\",\n\"url\": \"https://github.com/CodeChefVIT/CodeCombat/commit/60e45681c9baf8b02c2996ffc14442741f0c6fea\"\n}\n}]\n\n                        }\n                }\n            }\n        }",
           "type": "json"
         }
       ]
@@ -33,7 +33,7 @@
       "examples": [
         {
           "title": "response-example",
-          "content": "{\n    \"token:\"uhgdfsuadrhgasuighdiu\"\n}",
+          "content": "{\n \"user_details\": {\n    \"avatar_url\": \"https://avatars2.githubusercontent.com/u/30529572?v=4\",\n    \"name\": \"Angad Sharma\",\n    \"email\": null,\n    \"login\": \"L04DB4L4NC3R\",\n    \"id\": 30529572,\n    \"access_token\": \"sadnkasnfsadnsadsa\"\n   }\n}",
           "type": "json"
         }
       ]
@@ -81,7 +81,7 @@
       "examples": [
         {
           "title": "response-example",
-          "content": "{\n    \"token:\"uhgdfsuadrhgasuighdiu\"\n}",
+          "content": "{\n \"user_details\": {\n    \"avatar_url\": \"https://avatars2.githubusercontent.com/u/30529572?v=4\",\n    \"name\": \"Angad Sharma\",\n    \"email\": null,\n    \"login\": \"L04DB4L4NC3R\",\n    \"id\": 30529572,\n    \"access_token\": \"sadnkasnfsadnsadsa\"\n   }\n}",
           "type": "json"
         }
       ]

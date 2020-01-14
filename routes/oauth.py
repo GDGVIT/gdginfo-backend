@@ -27,8 +27,14 @@ class BaseHandler(tornado.web.RequestHandler):
 @apiGroup all
 @apiParamExample {json} response-example
 {
-    "details:"name",
-    status: true
+ "user_details": {
+    "avatar_url": "https://avatars2.githubusercontent.com/u/30529572?v=4",
+    "name": "Angad Sharma",
+    "email": null,
+    "login": "L04DB4L4NC3R",
+    "id": 30529572,
+    "access_token": "sadnkasnfsadnsadsa"
+   }
 }
 """
 
@@ -72,8 +78,14 @@ class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
-    "details:"name",
-    status: true
+ "user_details": {
+    "avatar_url": "https://avatars2.githubusercontent.com/u/30529572?v=4",
+    "name": "Angad Sharma",
+    "email": null,
+    "login": "L04DB4L4NC3R",
+    "id": 30529572,
+    "access_token": "sadnkasnfsadnsadsa"
+   }
 }
 """
 
