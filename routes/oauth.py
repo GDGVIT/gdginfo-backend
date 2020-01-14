@@ -85,7 +85,14 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
     def get(self):
         # print(self.get_auth_client())
         # self.write(json.dumps({'token': self.current_user['access_token']}))
-        self.write(json.dumps({'details': self.current_user, 'status': True}))
+        self.write(json.dumps({"user_details": {
+                    "avatar_url": self.current_user["avatar_url"],
+                    "name": self.current_user["name"],
+                    "email": self.current_user['email'],
+                    "login": self.current_user['L04DB4L4NC3R'],
+                    "id": self.current_user['id'],
+                    "access_token": self.current_user['access_token']
+                    },}))
 
 
 """
