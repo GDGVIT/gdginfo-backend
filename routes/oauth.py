@@ -27,7 +27,8 @@ class BaseHandler(tornado.web.RequestHandler):
 @apiGroup all
 @apiParamExample {json} response-example
 {
-    "token:"uhgdfsuadrhgasuighdiu"
+    "details:"name",
+    status: true
 }
 """
 
@@ -71,7 +72,8 @@ class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
-    "token:"uhgdfsuadrhgasuighdiu"
+    "details:"name",
+    status: true
 }
 """
 
@@ -82,7 +84,8 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
     @tornado.gen.coroutine
     def get(self):
         # print(self.get_auth_client())
-        self.write(json.dumps({'token': self.current_user['access_token']}))
+        # self.write(json.dumps({'token': self.current_user['access_token']}))
+        self.write(json.dumps({'details': self.current_user, status: True}))
 
 
 """
