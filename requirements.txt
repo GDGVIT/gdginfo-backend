@@ -1,6 +1,6 @@
 tornado==5.0.2 # Because https://stackoverflow.com/questions/55452074/bokeh-serve-show-myapp
 python-dotenv==0.10.3
-redis==3.3.7
+redis==3.3.11
 schedule==0.6.0
 requests==2.22.0
 pycurl==7.43.0.2
