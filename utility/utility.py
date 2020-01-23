@@ -51,6 +51,8 @@ def extract_repos(token, org, redis):
 
     # To escape the NoneType object issue when internet is slow
     repos = None
+
+    # TODO: exit the loop if executed too many times
     while repos is None:
         try:
             print('hiding here')
@@ -150,5 +152,6 @@ def topcontributor(token, org, redis):
         top_contributor[repo_name] = max(count, key=count.get)
 
     return top_contributor
+
 
 # TODO - top_contributors we will see later right now api limit exceeded

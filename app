@@ -14,7 +14,7 @@ from tornado.gen import coroutine
 from tornado.web import RequestHandler
 
 from dotenv import load_dotenv
-from routes import leaderboard, oauth, repos, seed, orgs
+from routes import leaderboard, oauth, repos, seed, orgs, analyze
 from utility import cron, utility
 
 load_dotenv(dotenv_path="./.env", verbose=True)
@@ -72,6 +72,7 @@ def main():
         (r'/repos', repos.Repos, dict(redis=r, org=org)),
         (r'/seed', seed.ManualSeed, dict(redis=r, org=org)),
         (r'/orgs', orgs.Orgs),
+        (r'/analyze/([^/]+)', analyze.Analyze, dict(redis=r, org=org)),
         (r'/', Welcome)
     ]
 

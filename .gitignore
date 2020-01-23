@@ -1,4 +1,7 @@
 .env
+cloned
+analyzed
+venv
 *.pyc
 __pycache__
 .vscode
