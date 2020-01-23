@@ -10,7 +10,6 @@ def get_cached_analysis(org, repo, redis, token):
     try:
         unpacked_pickled_object = pickle.loads(redis.get(redis_key))
         print("CACHE HIT")
-        raise "err"
         return unpacked_pickled_object, None
     except:
         data, err = extract_analysis(org, repo, token)
