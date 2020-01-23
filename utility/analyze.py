@@ -24,7 +24,7 @@ def get_cached_analysis(org, repo, redis, token):
             return data, err
         return data, err
 
-def extract_analysis(repo, org, token):
+def extract_analysis(org, repo, token):
 
     print("[RUNNING] extract_analysis")
     url="https://" + token + "@github.com/" + org + "/" + repo
@@ -36,8 +36,8 @@ def extract_analysis(repo, org, token):
     process = subprocess.Popen(["git", "clone", url, path], 
             stdout=subprocess.PIPE, 
             stderr=subprocess.PIPE)
-    #_, stderr = process.communicate()
-    #print(stderr)
+    _, stderr = process.communicate()
+    print(stderr)
     print("CLONED!!")
 
     # Applying analysis
@@ -47,7 +47,7 @@ def extract_analysis(repo, org, token):
     stdout, stderr = process.communicate()
     if len(stderr) != 0:
         print(stderr)
-        return stderr, "Error in removing clone"
+        return stderr, "Error in applying analysis"
     print("ANALYZED!!")
 
     # Removing repo
@@ -57,7 +57,7 @@ def extract_analysis(repo, org, token):
     _, stderr = process.communicate()
     if len(stderr) != 0:
         return stderr, "Error in removing clone"
-    print("ANALYZED!!")
+    print("REMOVED!!")
 
     return stdout, None
 
