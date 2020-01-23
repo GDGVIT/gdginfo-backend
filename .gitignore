@@ -1,4 +1,5 @@
 .env
+cloned
 analyzed
 venv
 *.pyc
