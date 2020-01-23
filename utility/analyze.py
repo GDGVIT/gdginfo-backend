@@ -40,8 +40,9 @@ def extract_analysis(org, repo, token):
     print(stderr)
     print("CLONED!!")
 
+    watch_files = "java,c,cc,cpp,h,hh,hpp,py,glsl,rb,js,sql,go,rs,dart,kt,kts,md,html,css"
     # Applying analysis
-    process = subprocess.Popen(["gitinspector", "--format=html", path], 
+    process = subprocess.Popen(["gitinspector", "--format=html", "-f", watch_files, path], 
             stdout=subprocess.PIPE, 
             stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
