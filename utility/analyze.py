@@ -10,6 +10,7 @@ def get_cached_analysis(org, repo, redis, token):
     try:
         unpacked_pickled_object = pickle.loads(redis.get(redis_key))
         print("CACHE HIT")
+        raise "err"
         return unpacked_pickled_object, None
     except:
         data, err = extract_analysis(org, repo, token)
@@ -42,7 +43,8 @@ def extract_analysis(org, repo, token):
 
     watch_files = "java,c,cc,cpp,h,hh,hpp,py,glsl,rb,js,sql,go,rs,dart,kt,kts,md,html,css"
     # Applying analysis
-    process = subprocess.Popen(["gitinspector", "--format=html", "-f", watch_files, path], 
+    process = subprocess.Popen(["gitinspector", "--format=html", "-f", watch_files
+        , "--grading", path], 
             stdout=subprocess.PIPE, 
             stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
@@ -68,6 +70,6 @@ def analyze(repo, org, redis, token):
         data, err = extract_analysis(org, repo, token)
         return data, err
     else:
-        data, err = get_cached_analysis(repo, org, redis, token)
+        data, err = get_cached_analysis(org, repo, redis, token)
         return data, err
 
