@@ -1,0 +1,4 @@
+gitinspector
+
+# See here: https://github.com/heroku/heroku-buildpack-apt
+# heroku buildpacks:add --index 1 heroku-community/apt
