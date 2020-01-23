@@ -16,24 +16,28 @@ def get_cached_analysis(org, repo, redis, token):
         if err is not None:
             return data, err
         pickled_object = pickle.dumps(data)
-        #if not redis.set(redis_key, pickled_object):
-            #print("[ERROR] setting in redis: cache_response")
-            #return "Error setting redis cache", "ERROR"
-        #else:
-        #    print("[COMPLETED] cache_response")
-            #return data, err
+        if not redis.set(redis_key, pickled_object):
+            print("[ERROR] setting in redis: cache_response")
+            return "Error setting redis cache", "ERROR"
+        else:
+            print("[COMPLETED] cache_response")
+            return data, err
         return data, err
 
-def extract_analysis(org, repo, token):
+def extract_analysis(repo, org, token):
 
     print("[RUNNING] extract_analysis")
     url="https://" + token + "@github.com/" + org + "/" + repo
+    print(url)
     path="./cloned/" + org + "_" + repo
+    print(path)
 
     # Cloning repo
     process = subprocess.Popen(["git", "clone", url, path], 
             stdout=subprocess.PIPE, 
             stderr=subprocess.PIPE)
+    #_, stderr = process.communicate()
+    #print(stderr)
     print("CLONED!!")
 
     # Applying analysis
@@ -47,13 +51,13 @@ def extract_analysis(org, repo, token):
     print("ANALYZED!!")
 
     # Removing repo
-    # process = subprocess.Popen(["rm", "-r", path], 
-            #stdout=subprocess.PIPE, 
-            #stderr=subprocess.PIPE)
-    #_, stderr = process.communicate()
-    #if len(stderr) != 0:
-        #return stderr, "Error in removing clone"
-    #print("ANALYZED!!")
+    process = subprocess.Popen(["rm", "-r", path], 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.PIPE)
+    _, stderr = process.communicate()
+    if len(stderr) != 0:
+        return stderr, "Error in removing clone"
+    print("ANALYZED!!")
 
     return stdout, None
 
