@@ -5,6 +5,18 @@ from tornado.web import RequestHandler
 from utility import analyze
 
 
+"""
+@api {get} /analyze/:repo analyze a repository
+@apiName analyze a repository
+@apiGroup all
+@apiPermission logged-in
+@apiParamExample {json} response-example
+{
+    "status": 200,
+    "message": "OK",
+    "error": null,
+    "payload": {{% HTML %}}
+"""
 class Analyze(RequestHandler):
     def initialize(self, redis, org, token):
         self.org=org
@@ -18,10 +30,10 @@ class Analyze(RequestHandler):
 
     @coroutine
     def get(self, slug=None):
-        # user = self.get_secure_cookie("user")
-        # if user is None or not user:
-            # self.write("You are not logged in")
-            # return
+        user = self.get_secure_cookie("user")
+        if user is None or not user:
+            self.write("You are not logged in")
+            return
 
 
         data, err = analyze.analyze(slug, self.org, self.redis, self.token)
@@ -31,8 +43,8 @@ class Analyze(RequestHandler):
              'error': err,
              'payload': data
          }
-        #self.write(json.dumps(jsonData))
-        self.write(data)
+        self.write(json.dumps(jsonData))
+        #self.write(data)
 
     def write_error(self, status_code, **kwargs):
         jsonData = {

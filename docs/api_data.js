@@ -20,6 +20,30 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/analyze/:repo",
+    "title": "analyze a repository",
+    "name": "analyze_a_repository",
+    "group": "all",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
+    "parameter": {
+      "examples": [
+        {
+          "title": "response-example",
+          "content": "{\n    \"status\": 200,\n    \"message\": \"OK\",\n    \"error\": null,\n    \"payload\": {{% HTML %}}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/analyze.py",
+    "groupTitle": "all"
+  },
+  {
+    "type": "get",
     "url": "/repos",
     "title": "data related to repos",
     "name": "data_related_to_repos",
