@@ -17,6 +17,8 @@ For calculating score of all members of any github organisation and top contribu
 - [X] Automatic Scheduled cache update
 - [X] Manual cache update
 - [X] GitHub Oauth
+- [ ] Repository specific analysis
+- [ ] Cache refresh for repo specific analysis
 
 <br/>
 
