@@ -4,17 +4,14 @@ RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get upgrade -y && apt-get install libcurl4-gnutls-dev python-setuptools -y
-
-RUN wget -O gitinspector.deb https://github.com/ejwa/gitinspector/releases/download/v0.4.3/gitinspector_0.4.3-1_all.deb && dpkg -i gitinspector.deb
+# apt-get because apt doesnt have a stable CLI for debian buster
+RUN apt-get update && apt-get upgrade -y && apt-get install build-essential
 
 COPY . . 
 
-RUN pip3 install -r requirements.txt
-
 RUN . /usr/src/app/.env
 
-RUN chmod +x app
+RUN make
 
 # EXPOSE 3000
 
