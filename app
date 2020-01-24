@@ -54,7 +54,7 @@ def main():
         if r is None:
             print("[ERROR] cannot connect to caching layer")
             exit(2)
-        utility.cache_response(token=token, org=org, rd=r)  # seed cache
+        # utility.cache_response(token=token, org=org, rd=r)  # seed cache
         cron.start_cache_job(token, org, r)
     else:
         r = None
