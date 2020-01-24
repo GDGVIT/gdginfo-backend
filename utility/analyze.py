@@ -1,3 +1,4 @@
+import os
 import pickle
 import subprocess
 
@@ -60,6 +61,17 @@ def extract_analysis(org, repo, token):
     if len(stderr) != 0:
         return stderr, "Error in removing clone"
     print("REMOVED!!")
+
+    # Append analyzed file to log
+    with open("analyzed.log", "a+") as f:
+        f.seek(0, os.SEEK_SET)
+        fileData = f.read()
+        f.seek(2, os.SEEK_SET)
+        print(fileData)
+        if repo not in fileData:
+            f.write(repo + "\n")
+        else:
+            print(repo + " already added in analyzed.log")
 
     return stdout, None
 
