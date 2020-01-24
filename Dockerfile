@@ -16,7 +16,10 @@ RUN . /usr/src/app/.env
 
 RUN chmod +x app
 
-EXPOSE 3000
+# EXPOSE 3000
 
 # -u flag to use unbuffered output
-ENTRYPOINT ["python3", "-u", "/usr/src/app/app", "--with-cache"]
+# Cannot use --with-cache on heroku as
+# PORT bind time increases
+ENTRYPOINT ["python3", "-u", "/usr/src/app/app"]
+
