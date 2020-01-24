@@ -1,3 +1,4 @@
+from utility.analyze import childProcess
 import datetime
 import pickle
 import sys
@@ -64,6 +65,7 @@ def extract_repos(token, org, redis):
     return repos
 
 
+# To be run daily
 def cache_response(token, org, rd):
     print("[RUNNING] cache_response")
     data = extract_repos(token, org, rd)
@@ -74,6 +76,23 @@ def cache_response(token, org, rd):
     else:
         print("[COMPLETED] cache_response")
 
+# To be run daily
+def cache_analysis(token, org, redis):
+    print("[RUNNING] cache_analysis")
+    with open("analyzed.log", "r") as f:
+        repo = f.readline()[:-1]
+        print("Starting cache job for repo: " + repo)
+        url="https://" + token + "@github.com/" + org + "/" + repo
+        print(url)
+        path="./cloned/" + org + "_" + repo
+        if len(repo) > 0:
+            data, err = childProcess(url, path)
+            if err is None:
+                pickled_object = pickle.dumps(data)
+                redis.set(org + ":" + repo, pickled_object)
+                print("Updated cache for repo: " + repo)
+            else:
+                print("ERROR: " + err)
 
 def get_cached_response(org, redis):
     print("[RUNNING] get_cached_response")

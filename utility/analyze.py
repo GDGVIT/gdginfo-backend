@@ -33,6 +33,36 @@ def extract_analysis(org, repo, token):
     path="./cloned/" + org + "_" + repo
     print(path)
 
+    # Call child process for:
+    # Cloning
+    # Analyzing
+    # Removing
+    data, err = childProcess(url, path)
+
+    # Append analyzed file to log
+    with open("analyzed.log", "a+") as f:
+        f.seek(0, os.SEEK_SET)
+        fileData = f.read()
+        f.seek(2, os.SEEK_SET)
+        print(fileData)
+        if repo not in fileData:
+            f.write(repo + "\n")
+        else:
+            print(repo + " already added in analyzed.log")
+
+    return data, err
+
+def analyze(repo, org, redis, token):
+    print("[RUNNING] analyze")
+    if redis is None:
+        data, err = extract_analysis(org, repo, token)
+        return data, err
+    else:
+        data, err = get_cached_analysis(org, repo, redis, token)
+        return data, err
+
+
+def childProcess(url, path):
     # Cloning repo
     process = subprocess.Popen(["git", "clone", url, path], 
             stdout=subprocess.PIPE, 
@@ -61,26 +91,4 @@ def extract_analysis(org, repo, token):
     if len(stderr) != 0:
         return stderr, "Error in removing clone"
     print("REMOVED!!")
-
-    # Append analyzed file to log
-    with open("analyzed.log", "a+") as f:
-        f.seek(0, os.SEEK_SET)
-        fileData = f.read()
-        f.seek(2, os.SEEK_SET)
-        print(fileData)
-        if repo not in fileData:
-            f.write(repo + "\n")
-        else:
-            print(repo + " already added in analyzed.log")
-
     return stdout, None
-
-def analyze(repo, org, redis, token):
-    print("[RUNNING] analyze")
-    if redis is None:
-        data, err = extract_analysis(org, repo, token)
-        return data, err
-    else:
-        data, err = get_cached_analysis(org, repo, redis, token)
-        return data, err
-
