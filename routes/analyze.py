@@ -43,8 +43,8 @@ class Analyze(RequestHandler):
              'error': err,
              'payload': data
          }
-        self.write(json.dumps(jsonData))
-        #self.write(data)
+        #self.write(json.dumps(jsonData))
+        self.write(data)
 
     def write_error(self, status_code, **kwargs):
         jsonData = {

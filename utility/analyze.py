@@ -2,6 +2,8 @@ import os
 import pickle
 import subprocess
 
+from bs4 import BeautifulSoup
+
 def cache_analysis(org, repo, rd, token):
     print("[RUNNING cache_analysis]")
 
@@ -91,4 +93,8 @@ def childProcess(url, path):
     if len(stderr) != 0:
         return stderr, "Error in removing clone"
     print("REMOVED!!")
-    return stdout, None
+
+    soup=BeautifulSoup(stdout, "lxml")
+    soup.find_all("div")[1].decompose()
+
+    return str(soup), None
