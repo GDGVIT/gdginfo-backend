@@ -86,9 +86,9 @@ def cache_analysis(token, org, redis):
         url="https://" + token + "@github.com/" + org + "/" + repo
         path="./cloned/" + org + "_" + repo
         if len(repo) > 0:
-            data, err = childProcess(url, path)
+            data, err = childProcess(url, path, "json")
             if err is None:
-                redis_key=org + ":" + repo + ":" + "html"
+                redis_key=org + ":" + repo + ":" + "json"
                 pickled_object = pickle.dumps(data)
                 redis.set(org + ":" + repo, pickled_object)
                 print("Updated cache for repo: " + repo)
