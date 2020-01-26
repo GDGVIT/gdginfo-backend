@@ -1,8 +1,11 @@
 import os
+import json
 import pickle
 import subprocess
 
 from bs4 import BeautifulSoup
+from xml.etree.ElementTree import fromstring
+from xmljson import badgerfish as bf
 
 def cache_analysis(org, repo, rd, token):
     print("[RUNNING cache_analysis]")
@@ -27,7 +30,7 @@ def get_cached_analysis(org, repo, redis, token):
             return data, err
         return data, err
 
-def extract_analysis(org, repo, token):
+def extract_analysis(org, repo, token, fmt):
 
     print("[RUNNING] extract_analysis")
     url="https://" + token + "@github.com/" + org + "/" + repo
@@ -37,7 +40,7 @@ def extract_analysis(org, repo, token):
     # Cloning
     # Analyzing
     # Removing
-    data, err = childProcess(url, path)
+    data, err = childProcess(url, path, fmt)
 
     # Append analyzed file to log
     with open("analyzed.log", "a+") as f:
@@ -51,17 +54,17 @@ def extract_analysis(org, repo, token):
 
     return data, err
 
-def analyze(repo, org, redis, token):
+def analyze(repo, org, redis, token, fmt):
     print("[RUNNING] analyze")
     if redis is None:
-        data, err = extract_analysis(org, repo, token)
+        data, err = extract_analysis(org, repo, token, fmt)
         return data, err
     else:
         data, err = get_cached_analysis(org, repo, redis, token)
         return data, err
 
 
-def childProcess(url, path):
+def childProcess(url, path, fmt):
     # Cloning repo
     process = subprocess.Popen(["git", "clone", url, path], 
             stdout=subprocess.PIPE, 
@@ -72,7 +75,7 @@ def childProcess(url, path):
 
     watch_files = "java,c,cc,cpp,h,hh,hpp,py,glsl,rb,js,sql,go,rs,dart,kt,kts,md,html,css"
     # Applying analysis
-    process = subprocess.Popen(["gitinspector", "--format=html", "-f", watch_files
+    process = subprocess.Popen(["gitinspector", "--format=" + fmt, "-f", watch_files
         , "--grading", path], 
             stdout=subprocess.PIPE, 
             stderr=subprocess.PIPE)
@@ -91,7 +94,10 @@ def childProcess(url, path):
         return stderr, "Error in removing clone"
     print("REMOVED!!")
 
-    soup=BeautifulSoup(stdout, "lxml")
-    soup.find_all("div")[1].decompose()
+    if fmt == "html":
+        soup=BeautifulSoup(stdout, "lxml")
+        soup.find_all("div")[1].decompose()
+        return str(soup), None
 
-    return str(soup), None
+    soup=bf.data(fromstring(stdout))
+    return json.dumps(soup), None

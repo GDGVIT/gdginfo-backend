@@ -72,7 +72,8 @@ def main():
         (r'/repos', repos.Repos, dict(redis=r, org=org)),
         (r'/seed', seed.ManualSeed, dict(redis=r, org=org)),
         (r'/orgs', orgs.Orgs),
-        (r'/analyze/([^/]+)', analyze.Analyze, dict(redis=r, org=org, token=token)),
+        (r'/analyze/([^/]+)', analyze.AnalyzeFmtHTML, dict(redis=r, org=org, token=token)),
+        (r'/json/analyze/([^/]+)', analyze.AnalyzeFmtJSON, dict(redis=r, org=org, token=token)),
         (r'/', Welcome)
     ]
 

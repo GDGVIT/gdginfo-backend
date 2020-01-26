@@ -8,3 +8,4 @@ pycurl==7.43.0.4
 simplejson
 torngithub
 bs4==0.0.1
+xmljson==0.2.0
