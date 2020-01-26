@@ -83,7 +83,6 @@ def cache_analysis(token, org, redis):
         repo = f.readline()[:-1]
         print("Starting cache job for repo: " + repo)
         url="https://" + token + "@github.com/" + org + "/" + repo
-        print(url)
         path="./cloned/" + org + "_" + repo
         if len(repo) > 0:
             data, err = childProcess(url, path)

@@ -37,14 +37,18 @@ class Analyze(RequestHandler):
 
 
         data, err = analyze.analyze(slug, self.org, self.redis, self.token)
-        jsonData = {
-             'status': 200,
-             'message': 'OK',                
-             'error': err,
-             'payload': data
-         }
+        #jsonData = {
+             #'status': 200,
+             #'message': 'OK',                
+             #'error': err,
+             #'payload': data
+         #}
         #self.write(json.dumps(jsonData))
-        self.write(data)
+        if err is None:
+            self.write(data)
+            return
+        self.write("<h1> Error occurred </h1> <br> <p> " + err + "</p> <br> <strong> " +
+                "Trace: </strong> " + str(data))
 
     def write_error(self, status_code, **kwargs):
         jsonData = {

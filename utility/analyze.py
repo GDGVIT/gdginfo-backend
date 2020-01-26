@@ -31,9 +31,7 @@ def extract_analysis(org, repo, token):
 
     print("[RUNNING] extract_analysis")
     url="https://" + token + "@github.com/" + org + "/" + repo
-    print(url)
     path="./cloned/" + org + "_" + repo
-    print(path)
 
     # Call child process for:
     # Cloning
@@ -46,7 +44,6 @@ def extract_analysis(org, repo, token):
         f.seek(0, os.SEEK_SET)
         fileData = f.read()
         f.seek(2, os.SEEK_SET)
-        print(fileData)
         if repo not in fileData:
             f.write(repo + "\n")
         else:
