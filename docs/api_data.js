@@ -29,11 +29,26 @@ define({ "api": [
         "name": "logged-in"
       }
     ],
+    "version": "0.0.0",
+    "filename": "routes/analyze.py",
+    "groupTitle": "all"
+  },
+  {
+    "type": "get",
+    "url": "/json/analyze/:repo",
+    "title": "analyze a repository and spit out JSON",
+    "name": "analyze_a_repository_and_spit_out_JSON",
+    "group": "all",
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "parameter": {
       "examples": [
         {
           "title": "response-example",
-          "content": "{\n    \"status\": 200,\n    \"message\": \"OK\",\n    \"error\": null,\n    \"payload\": {{% HTML %}}",
+          "content": "{\n\"gitinspector\": {\n\"version\": {\n\"$\": \"0.4.4\"\n},\n\"repository\": {\n\"$\": \"GDGVIT_template\"\n},\n\"report-date\": {\n\"$\": \"2020/01/27\"\n},\n\"changes\": {\n\"message\": {\n\"$\": \"The following historical commit information, by author, was found in the repository\"\n},\n\"authors\": {\n\"author\": [{\n\"name\": {\n\"$\": \"Angad Sharma\"\n},\n\"gravatar\": {\n\"$\": \"https://www.gravatar.com/avatar/5e8def242c2dd4eede4822fe2f8944b4?default=identicon\"\n},\n\"commits\": {\n\"$\": 1\n},\n\"insertions\": {\n\"$\": 1\n},\n\"deletions\": {\n\"$\": 0\n},\n\"percentage-of-changes\": {\n\"$\": 1.82\n}\n},\n{\n\"name\": {\n\"$\": \"L04DB4L4NC3R\"\n},\n\"gravatar\": {\n\"$\": \"https://www.gravatar.com/avatar/5053cc8b4421a2e1f55a238b00430ace?default=identicon\"\n},\n\"commits\": {\n\"$\": 1\n},\n\"insertions\": {\n\"$\": 53\n},\n\"deletions\": {\n\"$\": 1\n},\n\"percentage-of-changes\": {\n\"$\": 98.18\n}\n}\n]\n}\n},\n\"blame\": {\n\"message\": {\n\"$\": \"Below are the number of rows from each author that have survived and are still intact in the current revision\"\n},\n\"authors\": {\n\"author\": {\n\"name\": {\n\"$\": \"L04DB4L4NC3R\"\n},\n\"gravatar\": {\n\"$\": \"https://www.gravatar.com/avatar/5053cc8b4421a2e1f55a238b00430ace?default=identicon\"\n},\n\"rows\": {\n\"$\": 53\n},\n\"stability\": {\n\"$\": 100.0\n},\n\"age\": {\n\"$\": 0.0\n},\n\"percentage-in-comments\": {\n\"$\": 0.0\n}\n}\n}\n},\n\"timeline\": {\n\"message\": {\n\"$\": \"The following history timeline has been gathered from the repository\"\n},\n\"periods\": {\n\"@length\": \"week\",\n\"period\": {\n\"name\": {\n\"$\": \"2020W03\"\n},\n\"authors\": {\n\"author\": [{\n\"name\": {\n\"$\": \"Angad Sharma\"\n},\n\"gravatar\": {\n\"$\": \"https://www.gravatar.com/avatar/5e8def242c2dd4eede4822fe2f8944b4?default=identicon\"\n},\n\"work\": {\n\"$\": \".\"\n}\n},\n{\n\"name\": {\n\"$\": \"L04DB4L4NC3R\"\n},\n\"gravatar\": {\n\"$\": \"https://www.gravatar.com/avatar/5053cc8b4421a2e1f55a238b00430ace?default=identicon\"\n},\n\"work\": {\n\"$\": \"+++++++++++++++++++++++\"\n}\n}\n]\n},\n\"modified_rows\": {\n\"$\": 55\n}\n}\n}\n},\n\"metrics\": {\n\"message\": {\n\"$\": \"No metrics violations were found in the repository\"\n}\n},\n\"responsibilities\": {\n\"message\": {\n\"$\": \"The following responsibilities, by author, were found in the current revision of the repository (comments are excluded from the line count, if possible)\"\n},\n\"authors\": {\n\"author\": {\n\"name\": {\n\"$\": \"L04DB4L4NC3R\"\n},\n\"gravatar\": {\n\"$\": \"https://www.gravatar.com/avatar/5053cc8b4421a2e1f55a238b00430ace?default=identicon\"\n},\n\"files\": {\n\"file\": {\n\"name\": {\n\"$\": \"README.md\"\n},\n\"rows\": {\n\"$\": 53\n}\n}\n}\n}\n}\n},\n\"extensions\": {\n\"message\": {\n\"$\": \"The extensions below were found in the repository history\"\n},\n\"used\": {\n\"extension\": {\n\"$\": \"md\"\n}\n},\n\"unused\": {}\n}\n}\n}",
           "type": "json"
         }
       ]
