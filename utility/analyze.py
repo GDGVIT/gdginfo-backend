@@ -10,15 +10,15 @@ from xmljson import badgerfish as bf
 def cache_analysis(org, repo, rd, token):
     print("[RUNNING cache_analysis]")
 
-def get_cached_analysis(org, repo, redis, token):
+def get_cached_analysis(org, repo, redis, token, fmt):
     print("[RUNNING] get_cached_analysis")
-    redis_key = org + ":" + repo
+    redis_key = org + ":" + repo + ":" + fmt
     try:
         unpacked_pickled_object = pickle.loads(redis.get(redis_key))
         print("CACHE HIT")
         return unpacked_pickled_object, None
     except:
-        data, err = extract_analysis(org, repo, token)
+        data, err = extract_analysis(org, repo, token, fmt)
         if err is not None:
             return data, err
         pickled_object = pickle.dumps(data)
@@ -60,7 +60,7 @@ def analyze(repo, org, redis, token, fmt):
         data, err = extract_analysis(org, repo, token, fmt)
         return data, err
     else:
-        data, err = get_cached_analysis(org, repo, redis, token)
+        data, err = get_cached_analysis(org, repo, redis, token, fmt)
         return data, err
 
 

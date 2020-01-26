@@ -77,6 +77,7 @@ def cache_response(token, org, rd):
         print("[COMPLETED] cache_response")
 
 # To be run daily
+# TODO: cache JSON as well, in addition to HTML
 def cache_analysis(token, org, redis):
     print("[RUNNING] cache_analysis")
     with open("analyzed.log", "r") as f:
@@ -87,6 +88,7 @@ def cache_analysis(token, org, redis):
         if len(repo) > 0:
             data, err = childProcess(url, path)
             if err is None:
+                redis_key=org + ":" + repo + ":" + "html"
                 pickled_object = pickle.dumps(data)
                 redis.set(org + ":" + repo, pickled_object)
                 print("Updated cache for repo: " + repo)
