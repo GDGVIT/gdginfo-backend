@@ -8,12 +8,13 @@ from utility import analyze
 """
 @api {get} /analyze/:repo analyze a repository
 @apiName analyze a repository
+@apiParam string org organization name
+@apiParam string repo repository name for the organization
 @apiGroup all
 @apiPermission logged-in
 """
 class AnalyzeFmtHTML(RequestHandler):
-    def initialize(self, redis, org, token):
-        self.org=org
+    def initialize(self, redis, token):
         self.redis = redis
         self.token = token
 
@@ -30,14 +31,9 @@ class AnalyzeFmtHTML(RequestHandler):
             return
 
 
-        data, err = analyze.analyze(slug, self.org, self.redis, self.token, "html")
-        #jsonData = {
-             #'status': 200,
-             #'message': 'OK',                
-             #'error': err,
-             #'payload': data
-         #}
-        #self.write(json.dumps(jsonData))
+        org=self.get_query_argument("org")
+        repo=self.get_query_argument("repo")
+        data, err = analyze.analyze(repo, org, self.redis, self.token, "html")
         if err is None:
             self.write(data)
             return
@@ -57,9 +53,11 @@ class AnalyzeFmtHTML(RequestHandler):
         self.finish()
 
 """
-@api {get} /json/analyze/:repo analyze a repository and spit out JSON
+@api {get} /json/analyze analyze a repository and spit out JSON
 @apiName analyze a repository and spit out JSON
 @apiGroup all
+@apiParam string org organization name
+@apiParam string repo repository name for the organization
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
@@ -234,8 +232,7 @@ class AnalyzeFmtHTML(RequestHandler):
 }
 """
 class AnalyzeFmtJSON(RequestHandler):
-    def initialize(self, redis, org, token):
-        self.org=org
+    def initialize(self, redis, token):
         self.redis = redis
         self.token = token
 
@@ -252,14 +249,9 @@ class AnalyzeFmtJSON(RequestHandler):
             return
 
 
-        data, err = analyze.analyze(slug, self.org, self.redis, self.token, "xml")
-        #jsonData = {
-             #'status': 200,
-             #'message': 'OK',                
-             #'error': err,
-             #'payload': data
-         #}
-        #self.write(json.dumps(jsonData))
+        org=self.get_query_argument("org")
+        repo=self.get_query_argument("repo")
+        data, err = analyze.analyze(repo, org, self.redis, self.token, "xml")
         if err is None:
             self.write(data)
             return

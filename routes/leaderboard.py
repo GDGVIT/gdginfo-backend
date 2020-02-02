@@ -26,8 +26,6 @@ from utility import utility
     }
 }
 """
-
-
 class LeaderBoard(RequestHandler):
     def initialize(self, redis, org):
         self.org = org

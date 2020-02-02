@@ -67,13 +67,13 @@ def main():
         (r"/token", oauth.GetToken),
         (r"/oauth", oauth.GithubLoginHandler),
         (r"/logout", oauth.LogoutHandler),
-        ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r, org=org)),
-        (r'/topcontributors', leaderboard.TopContributors, dict(redis=r, org=org)),
-        (r'/repos', repos.Repos, dict(redis=r, org=org)),
-        (r'/seed', seed.ManualSeed, dict(redis=r, org=org)),
+        ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r)),
+        (r'/topcontributors', leaderboard.TopContributors, dict(redis=r)),
+        (r'/repos', repos.Repos, dict(redis=r)),
+        (r'/seed', seed.ManualSeed, dict(redis=r)),
         (r'/orgs', orgs.Orgs),
-        (r'/analyze/([^/]+)', analyze.AnalyzeFmtHTML, dict(redis=r, org=org, token=token)),
-        (r'/json/analyze/([^/]+)', analyze.AnalyzeFmtJSON, dict(redis=r, org=org, token=token)),
+        (r'/analyze', analyze.AnalyzeFmtHTML, dict(redis=r, token=token)),
+        (r'/json/analyze', analyze.AnalyzeFmtJSON, dict(redis=r, token=token)),
         (r'/', Welcome)
     ]
 

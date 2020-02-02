@@ -4,6 +4,18 @@ define({ "api": [
     "url": "/analyze/:repo",
     "title": "analyze a repository",
     "name": "analyze_a_repository",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "string",
+            "description": "<p>org organization name</p>"
+          }
+        ]
+      }
+    },
     "group": "all",
     "permission": [
       {
@@ -16,16 +28,21 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/json/analyze/:repo",
+    "url": "/json/analyze",
     "title": "analyze a repository and spit out JSON",
     "name": "analyze_a_repository_and_spit_out_JSON",
     "group": "all",
-    "permission": [
-      {
-        "name": "logged-in"
-      }
-    ],
     "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "string",
+            "description": "<p>org organization name</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "response-example",
@@ -34,6 +51,11 @@ define({ "api": [
         }
       ]
     },
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "version": "0.0.0",
     "filename": "routes/analyze.py",
     "groupTitle": "all"
