@@ -9,7 +9,7 @@ from utility import utility
 @api {get} /leaderboard org leaderboard
 @apiName org leaderboard
 @apiGroup all
-@apiParam [string] org organization name
+@apiParam org organization name
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
@@ -72,7 +72,7 @@ class LeaderBoard(RequestHandler):
 @api {get} /topcontributors top contributors of the org
 @apiName top contributors of the org
 @apiGroup all
-@apiParam [string] org organization name
+@apiParam org organization name
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {

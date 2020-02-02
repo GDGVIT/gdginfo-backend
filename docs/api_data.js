@@ -9,9 +9,15 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": true,
-            "field": "string",
-            "description": "<p>org organization name</p>"
+            "optional": false,
+            "field": "org",
+            "description": "<p>organization name</p>"
+          },
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "repo",
+            "description": "<p>repository name for the organization</p>"
           }
         ]
       }
@@ -37,9 +43,15 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": true,
-            "field": "string",
-            "description": "<p>org organization name</p>"
+            "optional": false,
+            "field": "org",
+            "description": "<p>organization name</p>"
+          },
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "repo",
+            "description": "<p>repository name for the organization</p>"
           }
         ]
       },
@@ -71,9 +83,9 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": true,
-            "field": "string",
-            "description": "<p>org organization name</p>"
+            "optional": false,
+            "field": "org",
+            "description": "<p>organization name</p>"
           }
         ]
       },
@@ -128,9 +140,9 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": true,
-            "field": "string",
-            "description": "<p>org organization name</p>"
+            "optional": false,
+            "field": "org",
+            "description": "<p>organization name</p>"
           }
         ]
       }
@@ -156,9 +168,9 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": true,
-            "field": "string",
-            "description": "<p>org organization name</p>"
+            "optional": false,
+            "field": "org",
+            "description": "<p>organization name</p>"
           }
         ]
       },
@@ -190,9 +202,9 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": true,
-            "field": "string",
-            "description": "<p>org organization name</p>"
+            "optional": false,
+            "field": "org",
+            "description": "<p>organization name</p>"
           }
         ]
       },

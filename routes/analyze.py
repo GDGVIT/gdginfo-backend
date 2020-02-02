@@ -8,8 +8,8 @@ from utility import analyze
 """
 @api {get} /analyze/:repo analyze a repository
 @apiName analyze a repository
-@apiParam [string] org organization name
-@apiParam [string] repo repository name for the organization
+@apiParam org organization name
+@apiParam repo repository name for the organization
 @apiGroup all
 @apiPermission logged-in
 """
@@ -56,8 +56,8 @@ class AnalyzeFmtHTML(RequestHandler):
 @api {get} /json/analyze analyze a repository and spit out JSON
 @apiName analyze a repository and spit out JSON
 @apiGroup all
-@apiParam [string] org organization name
-@apiParam [string] repo repository name for the organization
+@apiParam org organization name
+@apiParam repo repository name for the organization
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
