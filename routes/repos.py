@@ -9,7 +9,7 @@ from utility import utility
 @api {get} /repos data related to repos
 @apiName data related to repos
 @apiGroup all
-@apiParam string org organization name
+@apiParam [string] org organization name
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {

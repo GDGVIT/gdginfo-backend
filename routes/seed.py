@@ -8,7 +8,7 @@ from utility import cron, utility
 """
 @api {get} /seed manually seed cache [Hit only once]
 @apiName manually seed cache
-@apiParam string org organization name
+@apiParam [string] org organization name
 @apiPermission logged-in
 @apiGroup all
 """

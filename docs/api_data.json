@@ -9,7 +9,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": false,
+            "optional": true,
             "field": "string",
             "description": "<p>org organization name</p>"
           }
@@ -37,7 +37,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": false,
+            "optional": true,
             "field": "string",
             "description": "<p>org organization name</p>"
           }
@@ -71,7 +71,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": false,
+            "optional": true,
             "field": "string",
             "description": "<p>org organization name</p>"
           }
@@ -128,7 +128,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": false,
+            "optional": true,
             "field": "string",
             "description": "<p>org organization name</p>"
           }
@@ -156,7 +156,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": false,
+            "optional": true,
             "field": "string",
             "description": "<p>org organization name</p>"
           }
@@ -190,7 +190,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "optional": false,
+            "optional": true,
             "field": "string",
             "description": "<p>org organization name</p>"
           }
