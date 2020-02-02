@@ -232,7 +232,7 @@ class AnalyzeFmtHTML(RequestHandler):
 }
 """
 class AnalyzeFmtJSON(RequestHandler):
-    def initialize(self, redis, token):
+    def initialize(self, redis):
         self.redis = redis
 
     def set_default_headers(self):

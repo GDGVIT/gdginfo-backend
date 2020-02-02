@@ -83,7 +83,9 @@ def main():
         github_callback_path="/oauth",
         github_scope="read:repo, read:user, read:org",
         debug=True,
-        autoescape=None
+        autoescape=None,
+        request_timeout=5.0,
+        connect_timeout=5.0,
     )
 
     tornado.httpclient.AsyncHTTPClient.configure(

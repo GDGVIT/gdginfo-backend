@@ -66,12 +66,17 @@
     "title": "data related to repos",
     "name": "data_related_to_repos",
     "group": "all",
-    "permission": [
-      {
-        "name": "logged-in"
-      }
-    ],
     "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "string",
+            "description": "<p>org organization name</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "response-example",
@@ -80,6 +85,11 @@
         }
       ]
     },
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "version": "0.0.0",
     "filename": "routes/repos.py",
     "groupTitle": "all"
@@ -111,8 +121,20 @@
   {
     "type": "get",
     "url": "/seed",
-    "title": "manually seed cache",
+    "title": "manually seed cache [Hit only once]",
     "name": "manually_seed_cache",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "string",
+            "description": "<p>org organization name</p>"
+          }
+        ]
+      }
+    },
     "permission": [
       {
         "name": "logged-in"
@@ -129,12 +151,17 @@
     "title": "org leaderboard",
     "name": "org_leaderboard",
     "group": "all",
-    "permission": [
-      {
-        "name": "logged-in"
-      }
-    ],
     "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "string",
+            "description": "<p>org organization name</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "response-example",
@@ -143,6 +170,11 @@
         }
       ]
     },
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "version": "0.0.0",
     "filename": "routes/leaderboard.py",
     "groupTitle": "all"
@@ -153,12 +185,17 @@
     "title": "top contributors of the org",
     "name": "top_contributors_of_the_org",
     "group": "all",
-    "permission": [
-      {
-        "name": "logged-in"
-      }
-    ],
     "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "string",
+            "description": "<p>org organization name</p>"
+          }
+        ]
+      },
       "examples": [
         {
           "title": "response-example",
@@ -167,6 +204,11 @@
         }
       ]
     },
+    "permission": [
+      {
+        "name": "logged-in"
+      }
+    ],
     "version": "0.0.0",
     "filename": "routes/leaderboard.py",
     "groupTitle": "all"
