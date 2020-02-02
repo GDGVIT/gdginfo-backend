@@ -53,7 +53,7 @@ def extract_repos(token, org, redis):
     # To escape the NoneType object issue when internet is slow
     repos = None
 
-    # TODO: exit the loop if executed too many times
+    count=0
     while repos is None:
         try:
             print('hiding here')
@@ -61,6 +61,9 @@ def extract_repos(token, org, redis):
             ret = ret.json()
             repos = ret['data']['organization']['repositories']['nodes']
         except BaseException:
+            count+=1
+            if count > 10:
+                break
             pass
     return repos
 
@@ -75,6 +78,17 @@ def cache_response(token, org, rd):
         print("[ERROR] setting in redis: cache_response")
     else:
         print("[COMPLETED] cache_response")
+
+def cache_response_return(token, org, rd):
+    print("[RUNNING] cache_response")
+    data = extract_repos(token, org, rd)
+    pickled_object = pickle.dumps(data)
+    print(rd)
+    if not rd.set(org, pickled_object):
+        print("[ERROR] setting in redis: cache_response")
+        return None
+    else:
+        return data
 
 # To be run daily
 # TODO: cache JSON as well, in addition to HTML
@@ -105,8 +119,11 @@ def repos(token, org, redis):
     if redis is None:
         repos = extract_repos(token, org, redis)
     else:
-        repos = get_cached_response(org, redis)
-    return repos
+        try:
+            repos = get_cached_response(org, redis)
+        except:
+            repos = cache_response_return(token, org, redis)
+            return repos
 
 
 def leaderboard(token, org, redis):

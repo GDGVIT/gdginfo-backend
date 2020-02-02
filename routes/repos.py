@@ -9,6 +9,7 @@ from utility import utility
 @api {get} /repos data related to repos
 @apiName data related to repos
 @apiGroup all
+@apiParam string org organization name
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
@@ -43,8 +44,7 @@ from utility import utility
 
 
 class Repos(RequestHandler):
-    def initialize(self, redis, org):
-        self.org = org
+    def initialize(self, redis):
         self.redis = redis
 
     def set_default_headers(self):
@@ -59,7 +59,9 @@ class Repos(RequestHandler):
             self.redirect("/oauth")
         data = json.loads(user)
         token = data["access_token"]
-        response = utility.repos(token, self.org, self.redis)
+
+        org=self.get_query_argument("org")
+        response = utility.repos(token, org, self.redis)
         jsonData = {
             'status': 200,
             'message': 'OK',

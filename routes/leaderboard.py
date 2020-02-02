@@ -9,6 +9,7 @@ from utility import utility
 @api {get} /leaderboard org leaderboard
 @apiName org leaderboard
 @apiGroup all
+@apiParam string org organization name
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
@@ -27,8 +28,7 @@ from utility import utility
 }
 """
 class LeaderBoard(RequestHandler):
-    def initialize(self, redis, org):
-        self.org = org
+    def initialize(self, redis):
         self.redis = redis
 
     def set_default_headers(self):
@@ -44,7 +44,9 @@ class LeaderBoard(RequestHandler):
             return
         data = json.loads(user)
         token = data["access_token"]
-        res = utility.leaderboard(token, self.org, self.redis)
+
+        org=self.get_query_argument("org")
+        res = utility.leaderboard(token, org, self.redis)
 
         jsonData = {
             'status': 200,
@@ -70,6 +72,7 @@ class LeaderBoard(RequestHandler):
 @api {get} /topcontributors top contributors of the org
 @apiName top contributors of the org
 @apiGroup all
+@apiParam string org organization name
 @apiPermission logged-in
 @apiParamExample {json} response-example
 {
@@ -93,8 +96,7 @@ class LeaderBoard(RequestHandler):
 
 
 class TopContributors(RequestHandler):
-    def initialize(self, redis, org):
-        self.org = org
+    def initialize(self, redis):
         self.redis = redis
 
     def set_default_headers(self):
@@ -111,7 +113,8 @@ class TopContributors(RequestHandler):
         data = json.loads(user)
         token = data["access_token"]
 
-        response = utility.topcontributor(token, self.org, self.redis)
+        org=self.get_query_argument("org")
+        response = utility.topcontributor(token, org, self.redis)
         jsonData = {
             'status': 200,
             'message': 'OK',

@@ -14,9 +14,8 @@ from utility import analyze
 @apiPermission logged-in
 """
 class AnalyzeFmtHTML(RequestHandler):
-    def initialize(self, redis, token):
+    def initialize(self, redis):
         self.redis = redis
-        self.token = token
 
     def set_default_headers(self):
         print("setting headers!!!")
@@ -30,10 +29,11 @@ class AnalyzeFmtHTML(RequestHandler):
             self.write("You are not logged in")
             return
 
-
+        user=json.loads(user)
+        token=user["access_token"]
         org=self.get_query_argument("org")
         repo=self.get_query_argument("repo")
-        data, err = analyze.analyze(repo, org, self.redis, self.token, "html")
+        data, err = analyze.analyze(repo, org, self.redis, token, "html")
         if err is None:
             self.write(data)
             return
@@ -234,7 +234,6 @@ class AnalyzeFmtHTML(RequestHandler):
 class AnalyzeFmtJSON(RequestHandler):
     def initialize(self, redis, token):
         self.redis = redis
-        self.token = token
 
     def set_default_headers(self):
         print("setting headers!!!")
@@ -249,9 +248,11 @@ class AnalyzeFmtJSON(RequestHandler):
             return
 
 
+        user=json.loads(user)
+        token=user["access_token"]
         org=self.get_query_argument("org")
         repo=self.get_query_argument("repo")
-        data, err = analyze.analyze(repo, org, self.redis, self.token, "xml")
+        data, err = analyze.analyze(repo, org, self.redis, token, "xml")
         if err is None:
             self.write(data)
             return

@@ -15,7 +15,6 @@ from tornado.web import RequestHandler
 
 from dotenv import load_dotenv
 from routes import leaderboard, oauth, repos, seed, orgs, analyze
-from utility import cron, utility
 
 load_dotenv(dotenv_path="./.env", verbose=True)
 GITHUB_CLIENT_ID = os.environ.get("GITHUB_CLIENT_ID")
@@ -46,7 +45,6 @@ class Welcome(RequestHandler):
 
 
 def main():
-    token = os.environ.get("TOKEN")
     org = os.environ.get("ORGANIZATION")
     if len(sys.argv) > 1 and sys.argv[1] == "--with-cache":
         print("Connecting to redis....")
@@ -55,12 +53,11 @@ def main():
             print("[ERROR] cannot connect to caching layer")
             exit(2)
         # utility.cache_response(token=token, org=org, rd=r)  # seed cache
-        cron.start_cache_job(token, org, r)
     else:
         r = None
 
-    if token is None or org is None:
-        print("Token or Organization was null")
+    if org is None:
+        print("Organization was null")
         exit(1)
 
     handlers = [
@@ -72,8 +69,8 @@ def main():
         (r'/repos', repos.Repos, dict(redis=r)),
         (r'/seed', seed.ManualSeed, dict(redis=r)),
         (r'/orgs', orgs.Orgs),
-        (r'/analyze', analyze.AnalyzeFmtHTML, dict(redis=r, token=token)),
-        (r'/json/analyze', analyze.AnalyzeFmtJSON, dict(redis=r, token=token)),
+        (r'/analyze', analyze.AnalyzeFmtHTML, dict(redis=r)),
+        (r'/json/analyze', analyze.AnalyzeFmtJSON, dict(redis=r)),
         (r'/', Welcome)
     ]
 

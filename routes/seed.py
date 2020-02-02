@@ -2,20 +2,18 @@ import simplejson as json
 from tornado.gen import coroutine
 from tornado.web import RequestHandler
 
-from utility import utility
+from utility import cron, utility
 
 
 """
-@api {get} /seed manually seed cache
+@api {get} /seed manually seed cache [Hit only once]
 @apiName manually seed cache
+@apiParam string org organization name
 @apiPermission logged-in
 @apiGroup all
 """
-
-
 class ManualSeed(RequestHandler):
-    def initialize(self, redis, org):
-        self.org = org
+    def initialize(self, redis):
         self.redis = redis
 
     def set_default_headers(self):
@@ -32,7 +30,11 @@ class ManualSeed(RequestHandler):
         data = json.loads(user)
         token = data["access_token"]
 
-        utility.cache_response(token, self.org, self.redis)
+        org=self.get_query_argument("org")
+        utility.cache_response(token, org, self.redis)
+
+        # start CRON Job
+        cron.start_cache_job(token, org, self.redis)
         self.write("Cache seeded")
 
     def write_error(self, status_code, **kwargs):
