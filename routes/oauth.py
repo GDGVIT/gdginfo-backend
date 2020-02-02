@@ -21,24 +21,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return json_decode(user_json)
 
 
-"""
-@api {get} /oauth generate access token
-@apiName Authenticate github
-@apiGroup all
-@apiParamExample {json} response-example
-{
- "user_details": {
-    "avatar_url": "https://avatars2.githubusercontent.com/u/30529572?v=4",
-    "name": "Angad Sharma",
-    "email": null,
-    "login": "L04DB4L4NC3R",
-    "id": 30529572,
-    "access_token": "sadnkasnfsadnsadsa"
-   }
-}
-"""
-
-
+# These three routes are not needed since org and token are in the environment
 class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
     @tornado.gen.coroutine
     def get(self):
@@ -71,25 +54,6 @@ class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
             extra_params={"scope": self.settings['github_scope'], "foo": 1})
 
 
-"""
-@api {get} /oauth get access token
-@apiName get access token
-@apiGroup all
-@apiPermission logged-in
-@apiParamExample {json} response-example
-{
- "user_details": {
-    "avatar_url": "https://avatars2.githubusercontent.com/u/30529572?v=4",
-    "name": "Angad Sharma",
-    "email": null,
-    "login": "L04DB4L4NC3R",
-    "id": 30529572,
-    "access_token": "sadnkasnfsadnsadsa"
-   }
-}
-"""
-
-
 class GetToken(BaseHandler, torngithub.GithubMixin):
     @tornado.web.authenticated
     @tornado.web.asynchronous
@@ -105,14 +69,6 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
                     "id": self.current_user['id'],
                     "access_token": self.current_user['access_token']
                     },}))
-
-
-"""
-@api {get} /logout logout
-@apiName logout
-@apiPermission logged-in
-@apiGroup all
-"""
 
 
 class LogoutHandler(BaseHandler):

@@ -1,25 +1,6 @@
 define({ "api": [
   {
     "type": "get",
-    "url": "/oauth",
-    "title": "generate access token",
-    "name": "Authenticate_github",
-    "group": "all",
-    "parameter": {
-      "examples": [
-        {
-          "title": "response-example",
-          "content": "{\n \"user_details\": {\n    \"avatar_url\": \"https://avatars2.githubusercontent.com/u/30529572?v=4\",\n    \"name\": \"Angad Sharma\",\n    \"email\": null,\n    \"login\": \"L04DB4L4NC3R\",\n    \"id\": 30529572,\n    \"access_token\": \"sadnkasnfsadnsadsa\"\n   }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "routes/oauth.py",
-    "groupTitle": "all"
-  },
-  {
-    "type": "get",
     "url": "/analyze/:repo",
     "title": "analyze a repository",
     "name": "analyze_a_repository",
@@ -103,45 +84,6 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "routes/orgs.py",
-    "groupTitle": "all"
-  },
-  {
-    "type": "get",
-    "url": "/oauth",
-    "title": "get access token",
-    "name": "get_access_token",
-    "group": "all",
-    "permission": [
-      {
-        "name": "logged-in"
-      }
-    ],
-    "parameter": {
-      "examples": [
-        {
-          "title": "response-example",
-          "content": "{\n \"user_details\": {\n    \"avatar_url\": \"https://avatars2.githubusercontent.com/u/30529572?v=4\",\n    \"name\": \"Angad Sharma\",\n    \"email\": null,\n    \"login\": \"L04DB4L4NC3R\",\n    \"id\": 30529572,\n    \"access_token\": \"sadnkasnfsadnsadsa\"\n   }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "routes/oauth.py",
-    "groupTitle": "all"
-  },
-  {
-    "type": "get",
-    "url": "/logout",
-    "title": "logout",
-    "name": "logout",
-    "permission": [
-      {
-        "name": "logged-in"
-      }
-    ],
-    "group": "all",
-    "version": "0.0.0",
-    "filename": "routes/oauth.py",
     "groupTitle": "all"
   },
   {
