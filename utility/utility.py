@@ -121,6 +121,7 @@ def repos(token, org, redis):
     else:
         try:
             repos = get_cached_response(org, redis)
+            return repos
         except:
             repos = cache_response_return(token, org, redis)
             return repos
