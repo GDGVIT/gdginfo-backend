@@ -1,7 +1,7 @@
 define({ "api": [
   {
     "type": "get",
-    "url": "/analyze/:repo",
+    "url": "/analyze",
     "title": "analyze a repository",
     "name": "analyze_a_repository",
     "parameter": {

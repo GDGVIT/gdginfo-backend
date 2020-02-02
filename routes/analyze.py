@@ -6,7 +6,7 @@ from utility import analyze
 
 
 """
-@api {get} /analyze/:repo analyze a repository
+@api {get} /analyze analyze a repository
 @apiName analyze a repository
 @apiParam org organization name
 @apiParam repo repository name for the organization
