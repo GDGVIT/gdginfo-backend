@@ -1,6 +1,7 @@
 import simplejson as json
 from tornado.gen import coroutine
 from tornado.web import RequestHandler
+from tornado_cors import CorsMixin
 
 from utility import analyze
 
@@ -13,7 +14,13 @@ from utility import analyze
 @apiGroup all
 @apiPermission logged-in
 """
-class AnalyzeFmtHTML(RequestHandler):
+class AnalyzeFmtHTML(CorsMixin, RequestHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
+
     def initialize(self, redis):
         self.redis = redis
 

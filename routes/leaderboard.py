@@ -1,6 +1,7 @@
 import simplejson as json
 from tornado.gen import coroutine
 from tornado.web import RequestHandler
+from tornado_cors import CorsMixin
 
 from utility import utility
 
@@ -27,7 +28,12 @@ from utility import utility
     }
 }
 """
-class LeaderBoard(RequestHandler):
+class LeaderBoard(CorsMixin, RequestHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis
 
@@ -95,7 +101,12 @@ class LeaderBoard(RequestHandler):
 """
 
 
-class TopContributors(RequestHandler):
+class TopContributors(CorsMixin, RequestHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis
 

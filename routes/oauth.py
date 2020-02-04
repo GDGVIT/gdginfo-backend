@@ -2,6 +2,7 @@ import logging
 
 import simplejson as json
 import tornado.gen
+from tornado_cors import CorsMixin
 import tornado.httpclient
 import tornado.ioloop
 import tornado.options
@@ -13,7 +14,12 @@ from torngithub import json_decode, json_encode
 log = logging.getLogger("github.demo")
 
 
-class BaseHandler(tornado.web.RequestHandler):
+class BaseHandler(CorsMixin, tornado.web.RequestHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     def get_current_user(self):
         user_json = self.get_secure_cookie("user")
         if not user_json:
@@ -22,7 +28,12 @@ class BaseHandler(tornado.web.RequestHandler):
 
 
 # These three routes are not needed since org and token are in the environment
-class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
+class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.GithubMixin):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     @tornado.gen.coroutine
     def get(self):
         # we can append next to the redirect uri, so the user gets the
@@ -55,6 +66,12 @@ class GithubLoginHandler(tornado.web.RequestHandler, torngithub.GithubMixin):
 
 
 class GetToken(BaseHandler, torngithub.GithubMixin):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
+
     @tornado.web.authenticated
     @tornado.web.asynchronous
     @tornado.gen.coroutine
@@ -72,6 +89,11 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
 
 
 class LogoutHandler(BaseHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     def get(self):
         self.clear_cookie("user")
         self.redirect(self.get_argument("next", "/"))
