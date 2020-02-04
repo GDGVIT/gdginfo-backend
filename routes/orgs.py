@@ -39,7 +39,12 @@ from utility import orgs
 """
 
 
-class Orgs(RequestHandler):
+class Orgs(CorsMixin, RequestHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     def set_default_headers(self):
         print("setting headers!!!")
         self.set_header("Access-Control-Allow-Origin", "*")

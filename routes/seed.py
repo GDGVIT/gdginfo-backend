@@ -12,7 +12,12 @@ from utility import cron, utility
 @apiPermission logged-in
 @apiGroup all
 """
-class ManualSeed(RequestHandler):
+class ManualSeed(CorsMixin, RequestHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis
 

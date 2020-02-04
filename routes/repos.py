@@ -43,7 +43,12 @@ from utility import utility
 """
 
 
-class Repos(RequestHandler):
+class Repos(CorsMixin, RequestHandler):
+    CORS_ORIGIN = '*'
+    CORS_HEADERS = 'Content-Type'
+    CORS_METHODS = 'POST'
+    CORS_CREDENTIALS = True
+    CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis
 
