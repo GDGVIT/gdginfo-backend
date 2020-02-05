@@ -15,7 +15,7 @@ from utility import analyze
 @apiPermission logged-in
 """
 class AnalyzeFmtHTML(CorsMixin, RequestHandler):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True
@@ -239,7 +239,7 @@ class AnalyzeFmtHTML(CorsMixin, RequestHandler):
 }
 """
 class AnalyzeFmtJSON(CorsMixin, RequestHandler):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True

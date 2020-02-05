@@ -45,7 +45,7 @@ from utility import utility
 
 
 class Repos(CorsMixin, RequestHandler):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True

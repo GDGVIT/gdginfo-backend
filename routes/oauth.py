@@ -15,7 +15,7 @@ log = logging.getLogger("github.demo")
 
 
 class BaseHandler(CorsMixin, tornado.web.RequestHandler):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True
@@ -29,7 +29,7 @@ class BaseHandler(CorsMixin, tornado.web.RequestHandler):
 
 # These three routes are not needed since org and token are in the environment
 class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.GithubMixin):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True
@@ -66,7 +66,7 @@ class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.Githu
 
 
 class GetToken(BaseHandler, torngithub.GithubMixin):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True
@@ -89,7 +89,7 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
 
 
 class LogoutHandler(BaseHandler):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True

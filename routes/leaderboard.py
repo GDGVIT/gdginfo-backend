@@ -29,7 +29,7 @@ from utility import utility
 }
 """
 class LeaderBoard(CorsMixin, RequestHandler):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True
@@ -102,7 +102,7 @@ class LeaderBoard(CorsMixin, RequestHandler):
 
 
 class TopContributors(CorsMixin, RequestHandler):
-    CORS_ORIGIN = '*'
+    CORS_ORIGIN = 'https://gdashboard.netlify.com'
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'POST'
     CORS_CREDENTIALS = True
