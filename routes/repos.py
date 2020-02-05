@@ -1,6 +1,7 @@
 import simplejson as json
 from tornado.gen import coroutine
 from tornado.web import RequestHandler
+from tornado_cors import CorsMixin
 
 from utility import utility
 

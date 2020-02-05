@@ -1,4 +1,5 @@
 import simplejson as json
+from tornado_cors import CorsMixin
 from tornado.gen import coroutine
 from tornado.web import RequestHandler
 
