@@ -18,5 +18,5 @@ RUN make
 # -u flag to use unbuffered output
 # Cannot use --with-cache on heroku as
 # PORT bind time increases
-ENTRYPOINT ["python3", "-u", "/usr/src/app/app", "--with-cache"]
+ENTRYPOINT ["python3", "-u", "/usr/src/app/app"]
 
