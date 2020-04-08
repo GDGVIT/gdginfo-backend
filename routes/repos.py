@@ -45,9 +45,9 @@ from utility import utility
 
 
 class Repos(CorsMixin, RequestHandler):
-    CORS_ORIGIN = 'https://gdashboard.netlify.com'
+    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
     CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'POST'
+    CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def initialize(self, redis):

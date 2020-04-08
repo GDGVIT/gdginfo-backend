@@ -15,9 +15,9 @@ log = logging.getLogger("github.demo")
 
 
 class BaseHandler(CorsMixin, tornado.web.RequestHandler):
-    CORS_ORIGIN = 'https://gdashboard.netlify.com'
+    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
     CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'POST'
+    CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def get_current_user(self):
@@ -29,9 +29,9 @@ class BaseHandler(CorsMixin, tornado.web.RequestHandler):
 
 # These three routes are not needed since org and token are in the environment
 class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.GithubMixin):
-    CORS_ORIGIN = 'https://gdashboard.netlify.com'
+    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
     CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'POST'
+    CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     @tornado.gen.coroutine
@@ -55,7 +55,7 @@ class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.Githu
                 self.set_secure_cookie("user", json_encode(user))
             else:
                 self.clear_cookie("user")
-            self.redirect("/token")
+            self.redirect("https://github-dashboard-org.netlify.com/dashboard")
             return
 
         # otherwise we need to request an authorization code
@@ -66,9 +66,9 @@ class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.Githu
 
 
 class GetToken(BaseHandler, torngithub.GithubMixin):
-    CORS_ORIGIN = 'https://gdashboard.netlify.com'
+    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
     CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'POST'
+    CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
 
@@ -89,9 +89,9 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
 
 
 class LogoutHandler(BaseHandler):
-    CORS_ORIGIN = 'https://gdashboard.netlify.com'
+    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
     CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'POST'
+    CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def get(self):

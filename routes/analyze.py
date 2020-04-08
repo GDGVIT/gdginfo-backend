@@ -15,9 +15,9 @@ from utility import analyze
 @apiPermission logged-in
 """
 class AnalyzeFmtHTML(CorsMixin, RequestHandler):
-    CORS_ORIGIN = 'https://gdashboard.netlify.com'
+    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
     CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'POST'
+    CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
 
@@ -239,9 +239,9 @@ class AnalyzeFmtHTML(CorsMixin, RequestHandler):
 }
 """
 class AnalyzeFmtJSON(CorsMixin, RequestHandler):
-    CORS_ORIGIN = 'https://gdashboard.netlify.com'
+    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
     CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'POST'
+    CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def initialize(self, redis):
