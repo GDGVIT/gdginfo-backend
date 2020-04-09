@@ -44,12 +44,10 @@ class LeaderBoard(CorsMixin, RequestHandler):
 
     @coroutine
     def get(self):
-        user = self.get_secure_cookie("user")
-        if user is None or not user:
+        token=self.request.headers.get("Authorization")
+        if token is None or not token:
             self.write("You are not logged in")
             return
-        data = json.loads(user)
-        token = data["access_token"]
 
         org=self.get_query_argument("org")
         res = utility.leaderboard(token, org, self.redis)
@@ -117,12 +115,10 @@ class TopContributors(CorsMixin, RequestHandler):
 
     @coroutine
     def get(self):
-        user = self.get_secure_cookie("user")
-        if user is None or not user:
+        token=self.request.headers.get("Authorization")
+        if token is None or not token:
             self.write("You are not logged in")
             return
-        data = json.loads(user)
-        token = data["access_token"]
 
         org=self.get_query_argument("org")
         response = utility.topcontributor(token, org, self.redis)

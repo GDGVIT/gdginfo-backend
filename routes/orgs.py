@@ -53,12 +53,10 @@ class Orgs(CorsMixin, RequestHandler):
 
     @coroutine
     def get(self):
-        user = self.get_secure_cookie("user")
-        if user is None or not user:
+        token=self.request.headers.get("Authorization")
+        if token is None or not token:
             self.write("You are not logged in")
             return
-        data = json.loads(user)
-        token = data["access_token"]
         res = orgs.get_orgs(token)
         jsonData = {
             'status': 200,

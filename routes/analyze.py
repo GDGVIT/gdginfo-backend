@@ -31,13 +31,11 @@ class AnalyzeFmtHTML(CorsMixin, RequestHandler):
 
     @coroutine
     def get(self, slug=None):
-        user = self.get_secure_cookie("user")
-        if user is None or not user:
+        token=self.request.headers.get("Authorization")
+        if token is None or not token:
             self.write("You are not logged in")
             return
 
-        user=json.loads(user)
-        token=user["access_token"]
         org=self.get_query_argument("org")
         repo=self.get_query_argument("repo")
         data, err = analyze.analyze(repo, org, self.redis, token, "html")
@@ -254,14 +252,12 @@ class AnalyzeFmtJSON(CorsMixin, RequestHandler):
 
     @coroutine
     def get(self, slug=None):
-        user = self.get_secure_cookie("user")
-        if user is None or not user:
+        token=self.request.headers.get("Authorization")
+        if token is None or not token:
             self.write("You are not logged in")
             return
 
 
-        user=json.loads(user)
-        token=user["access_token"]
         org=self.get_query_argument("org")
         repo=self.get_query_argument("repo")
         data, err = analyze.analyze(repo, org, self.redis, token, "xml")

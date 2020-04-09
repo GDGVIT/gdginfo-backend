@@ -61,7 +61,7 @@ def main():
         exit(1)
 
     handlers = [
-        # (r"/token", oauth.GetToken),
+        (r"/token", oauth.GetToken),
         (r"/oauth", oauth.GithubLoginHandler),
         (r"/logout", oauth.LogoutHandler),
         ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r)),

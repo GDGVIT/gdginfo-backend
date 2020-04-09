@@ -60,11 +60,9 @@ class Repos(CorsMixin, RequestHandler):
 
     @coroutine
     def get(self):
-        user = self.get_secure_cookie("user")
-        if user is None or not user:
-            self.redirect("/oauth")
-        data = json.loads(user)
-        token = data["access_token"]
+        token=self.request.headers.get("Authorization")
+        if token is None or not token:
+            self.write("You are not logged in")
 
         org=self.get_query_argument("org")
         response = utility.repos(token, org, self.redis)

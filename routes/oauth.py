@@ -55,7 +55,7 @@ class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.Githu
                 self.set_secure_cookie("user", json_encode(user))
             else:
                 self.clear_cookie("user")
-            self.redirect("https://github-dashboard-org.netlify.com/dashboard")
+            self.redirect("/token")
             return
 
         # otherwise we need to request an authorization code
