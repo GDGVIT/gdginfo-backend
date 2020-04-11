@@ -15,7 +15,7 @@ from utility import analyze
 @apiPermission logged-in
 """
 class AnalyzeFmtHTML(CorsMixin, RequestHandler):
-    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
+    CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
@@ -237,7 +237,7 @@ class AnalyzeFmtHTML(CorsMixin, RequestHandler):
 }
 """
 class AnalyzeFmtJSON(CorsMixin, RequestHandler):
-    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
+    CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True

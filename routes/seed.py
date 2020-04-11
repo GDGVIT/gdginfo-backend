@@ -14,7 +14,7 @@ from utility import cron, utility
 @apiGroup all
 """
 class ManualSeed(CorsMixin, RequestHandler):
-    CORS_ORIGIN = "https://github-dashboard-org.netlify.com/dashboard"
+    CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
     CORS_CREDENTIALS = True
