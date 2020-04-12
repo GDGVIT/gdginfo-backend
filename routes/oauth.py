@@ -18,7 +18,6 @@ class BaseHandler(CorsMixin, tornado.web.RequestHandler):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def get_current_user(self):
         user_json = self.get_secure_cookie("user")
@@ -32,7 +31,6 @@ class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.Githu
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     @tornado.gen.coroutine
     def get(self):
@@ -69,7 +67,6 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
 
     @tornado.web.authenticated
@@ -92,7 +89,6 @@ class LogoutHandler(BaseHandler):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def get(self):
         self.clear_cookie("user")

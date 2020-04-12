@@ -18,7 +18,6 @@ class AnalyzeFmtHTML(CorsMixin, RequestHandler):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
 
     def initialize(self, redis):
@@ -240,7 +239,6 @@ class AnalyzeFmtJSON(CorsMixin, RequestHandler):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis

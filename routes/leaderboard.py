@@ -32,7 +32,6 @@ class LeaderBoard(CorsMixin, RequestHandler):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis
@@ -103,7 +102,6 @@ class TopContributors(CorsMixin, RequestHandler):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
-    CORS_CREDENTIALS = True
     CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis
