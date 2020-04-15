@@ -63,6 +63,7 @@ def main():
     handlers = [
         (r"/token", oauth.GetToken),
         (r"/oauth", oauth.GithubLoginHandler),
+        (r"/exchange", oauth.ExchangeHandler),
         (r"/logout", oauth.LogoutHandler),
         ('/leaderboard', leaderboard.LeaderBoard, dict(redis=r)),
         (r'/topcontributors', leaderboard.TopContributors, dict(redis=r)),

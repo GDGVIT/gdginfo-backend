@@ -42,7 +42,7 @@ from utility import orgs
 
 class Orgs(CorsMixin, RequestHandler):
     CORS_ORIGIN = "*"
-    CORS_HEADERS = 'Content-Type'
+    CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
     def set_default_headers(self):

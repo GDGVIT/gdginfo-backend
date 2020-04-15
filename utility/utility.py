@@ -131,6 +131,7 @@ def leaderboard(token, org, redis):
     member_list = dict()
     score = dict()
     if redis is None:
+        print("Got repositories from redis")
         repos = extract_repos(token, org, redis)
     else:
         repos = get_cached_response(org, redis)

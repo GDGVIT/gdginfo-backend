@@ -1,4 +1,6 @@
 import logging
+import os
+import requests
 
 import simplejson as json
 import tornado.gen
@@ -16,7 +18,7 @@ log = logging.getLogger("github.demo")
 
 class BaseHandler(CorsMixin, tornado.web.RequestHandler):
     CORS_ORIGIN = "*"
-    CORS_HEADERS = 'Content-Type'
+    CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
     def get_current_user(self):
@@ -65,7 +67,7 @@ class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.Githu
 
 class GetToken(BaseHandler, torngithub.GithubMixin):
     CORS_ORIGIN = "*"
-    CORS_HEADERS = 'Content-Type'
+    CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
 
@@ -87,10 +89,27 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
 
 class LogoutHandler(BaseHandler):
     CORS_ORIGIN = "*"
-    CORS_HEADERS = 'Content-Type'
-    CORS_METHODS = 'GET'
+    CORS_HEADERS = 'Content-Type, Authorization'
+    CORS_METHODS = 'POST'
     CORS_MAX_AGE = 21600
     def get(self):
         self.clear_cookie("user")
         self.redirect(self.get_argument("next", "/"))
 
+class ExchangeHandler(BaseHandler):
+    CORS_ORIGIN = "*"
+    CORS_HEADERS = 'Content-Type, Authorization'
+    CORS_METHODS = 'GET'
+    CORS_MAX_AGE = 21600
+
+    def get(self):
+        code = self.request.headers.get("Authorization")
+        url = "https://github.com/login/oauth/access_token?client_id="+ os.environ.get("GITHUB_CLIENT_ID") + "&redirect_uri="+ os.environ.get("GITHUB_REDIRECT_URI") +"&client_secret="+os.environ.get("GITHUB_CLIENT_SECRET")+"&code=" + code
+
+        x = requests.post(url)
+        print("Requested GITHUB ACCESS TOKEN")
+        print(x.text)
+        x = x.text.split("=")[1]
+        x = x.split("&scope")[0]
+        print(x)
+        self.write(json.dumps({"access_token": x}))
