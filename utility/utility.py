@@ -16,7 +16,7 @@ def extract_repos(token, org, redis):
         "query": """
                     {
                     organization(login: "%s") {
-                        repositories(first: 100, affiliations: COLLABORATOR, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                        repositories(first: 100, affiliations: ORGANIZATION_MEMBER, orderBy: {field: PUSHED_AT, direction: DESC}) {
                         nodes {
                             name
                             ref(qualifiedName: "master") {

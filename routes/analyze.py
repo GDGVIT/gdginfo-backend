@@ -23,11 +23,6 @@ class AnalyzeFmtHTML(CorsMixin, RequestHandler):
     def initialize(self, redis):
         self.redis = redis
 
-    def set_default_headers(self):
-        print("setting headers!!!")
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-
     @coroutine
     def get(self, slug=None):
         token=self.request.headers.get("Authorization")
@@ -242,11 +237,6 @@ class AnalyzeFmtJSON(CorsMixin, RequestHandler):
     CORS_MAX_AGE = 21600
     def initialize(self, redis):
         self.redis = redis
-
-    def set_default_headers(self):
-        print("setting headers!!!")
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
 
     @coroutine
     def get(self, slug=None):

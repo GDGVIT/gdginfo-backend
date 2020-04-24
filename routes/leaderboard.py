@@ -36,14 +36,9 @@ class LeaderBoard(CorsMixin, RequestHandler):
     def initialize(self, redis):
         self.redis = redis
 
-    def set_default_headers(self):
-        print("setting headers!!!")
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-
     @coroutine
     def get(self):
-        token=self.request.headers.get("Authorization")
+        token=self.request.headers.get("authorization")
         if token is None or not token:
             self.write("You are not logged in")
             return
@@ -97,7 +92,6 @@ class LeaderBoard(CorsMixin, RequestHandler):
 }
 """
 
-
 class TopContributors(CorsMixin, RequestHandler):
     CORS_ORIGIN = "*"
     CORS_HEADERS = 'Content-Type, Authorization'
@@ -106,12 +100,6 @@ class TopContributors(CorsMixin, RequestHandler):
     def initialize(self, redis):
         self.redis = redis
 
-    def set_default_headers(self):
-        print("setting headers!!!")
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-
-    @coroutine
     def get(self):
         token=self.request.headers.get("Authorization")
         if token is None or not token:

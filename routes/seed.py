@@ -21,11 +21,6 @@ class ManualSeed(CorsMixin, RequestHandler):
     def initialize(self, redis):
         self.redis = redis
 
-    def set_default_headers(self):
-        print("setting headers!!!")
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-
     @coroutine
     def get(self):
         token=self.request.headers.get("Authorization")
