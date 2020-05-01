@@ -49,6 +49,11 @@ class Repos(CorsMixin, RequestHandler):
     CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers', 'authorization')
+
     def initialize(self, redis):
         self.redis = redis
 

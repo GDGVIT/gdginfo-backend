@@ -21,6 +21,11 @@ class BaseHandler(CorsMixin, tornado.web.RequestHandler):
     CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers', 'authorization')
+
     def get_current_user(self):
         user_json = self.get_secure_cookie("user")
         if not user_json:
@@ -34,6 +39,11 @@ class GithubLoginHandler(CorsMixin, tornado.web.RequestHandler, torngithub.Githu
     CORS_HEADERS = 'Content-Type'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers', 'authorization')
+
     @tornado.gen.coroutine
     def get(self):
         # we can append next to the redirect uri, so the user gets the
@@ -70,6 +80,11 @@ class GetToken(BaseHandler, torngithub.GithubMixin):
     CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers', 'authorization')
+
 
     @tornado.web.authenticated
     @tornado.web.asynchronous
@@ -92,6 +107,11 @@ class LogoutHandler(BaseHandler):
     CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'POST'
     CORS_MAX_AGE = 21600
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers', 'authorization')
+
     def get(self):
         self.clear_cookie("user")
         self.redirect(self.get_argument("next", "/"))
@@ -101,6 +121,11 @@ class ExchangeHandler(BaseHandler):
     CORS_HEADERS = 'Content-Type, Authorization'
     CORS_METHODS = 'GET'
     CORS_MAX_AGE = 21600
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers', 'authorization')
+
 
     def get(self):
         code = self.request.headers.get("Authorization")

@@ -16,7 +16,7 @@ def extract_repos(token, org, redis):
         "query": """
                     {
                     organization(login: "%s") {
-                        repositories(first: 100, affiliations: ORGANIZATION_MEMBER, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                        repositories(first: 50, affiliations: ORGANIZATION_MEMBER, orderBy: {field: PUSHED_AT, direction: DESC}) {
                         nodes {
                             name
                             ref(qualifiedName: "master") {
@@ -118,6 +118,7 @@ def get_cached_response(org, redis):
 def repos(token, org, redis):
     if redis is None:
         repos = extract_repos(token, org, redis)
+        return repos
     else:
         try:
             repos = get_cached_response(org, redis)
