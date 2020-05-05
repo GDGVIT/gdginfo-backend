@@ -163,7 +163,10 @@ def leaderboard(token, org, redis):
 
             score[contr] = total_commits * 10 + additions * 5 + deletions * 2
 
-    return score
+    payload = []
+    for k, v in score.items():
+        payload.append({"name": k, "score": v})
+    return payload
 
 
 def topcontributor(token, org, redis):
