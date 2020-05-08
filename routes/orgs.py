@@ -77,3 +77,42 @@ class Orgs(CorsMixin, RequestHandler):
         self.set_status(204)
         self.finish()
 
+
+
+class User(CorsMixin, RequestHandler):
+    CORS_ORIGIN = "*"
+    CORS_HEADERS = 'Content-Type, Authorization'
+    CORS_METHODS = 'GET'
+    CORS_MAX_AGE = 21600
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.set_header('Access-Control-Allow-Headers', 'authorization')
+
+
+    @coroutine
+    def get(self):
+        token=self.request.headers.get("Authorization")
+        if token is None or not token:
+            self.write("You are not logged in")
+            return
+        res = orgs.get_user_data(token)
+        jsonData = {
+            'status': 200,
+            'message': 'OK',
+            'payload': res
+        }
+        self.write(json.dumps(jsonData))
+
+    def write_error(self, status_code, **kwargs):
+        jsonData = {
+            'status': int(status_code),
+            'message': "Internal server error",
+            'answer': 'NULL'
+        }
+        self.write(json.dumps(jsonData))
+
+    def options(self):
+        self.set_status(204)
+        self.finish()
+

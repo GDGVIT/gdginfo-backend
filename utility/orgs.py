@@ -26,3 +26,10 @@ def get_orgs(token):
     ret = requests.post(url=url, json=json, headers=headers)
     ret = ret.json()
     return ret
+
+def get_user_data(token):
+    url = "https://api.github.com/user"
+    headers = {'Authorization': 'token %s' % token}
+    ret = requests.get(url=url, headers=headers)
+    return ret.json()
+

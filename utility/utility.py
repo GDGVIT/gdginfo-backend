@@ -171,7 +171,7 @@ def leaderboard(token, org, redis):
 
 def topcontributor(token, org, redis):
     member_list = dict()
-    top_contributor = dict()
+    result = []
     if redis is None:
         repos = extract_repos(token, org, redis)
     else:
@@ -192,9 +192,10 @@ def topcontributor(token, org, redis):
                 count[contrs['node']['author']['name']] += 1
             except BaseException:
                 count[contrs['node']['author']['name']] = 1
-        top_contributor[repo_name] = max(count, key=count.get)
+        top_contributor = max(count, key=count.get)
+        result.append({"repo_name": repo_name, "top_contributor": top_contributor})
 
-    return top_contributor
+    return result
 
 
 # TODO - top_contributors we will see later right now api limit exceeded

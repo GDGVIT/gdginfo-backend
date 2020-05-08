@@ -70,6 +70,7 @@ def main():
         (r'/repos', repos.Repos, dict(redis=r)),
         (r'/seed', seed.ManualSeed, dict(redis=r)),
         (r'/orgs', orgs.Orgs),
+        (r'/user', orgs.User),
         (r'/analyze', analyze.AnalyzeFmtHTML, dict(redis=r)),
         (r'/json/analyze', analyze.AnalyzeFmtJSON, dict(redis=r)),
         (r'/', Welcome)
