@@ -45,7 +45,6 @@ class Welcome(RequestHandler):
 
 
 def main():
-    org = os.environ.get("ORGANIZATION")
     if len(sys.argv) > 1 and sys.argv[1] == "--with-cache":
         print("Connecting to redis....")
         r = redis.from_url(os.environ.get("REDIS_URL"))
@@ -55,10 +54,6 @@ def main():
         # utility.cache_response(token=token, org=org, rd=r)  # seed cache
     else:
         r = None
-
-    if org is None:
-        print("Organization was null")
-        exit(1)
 
     handlers = [
         (r"/token", oauth.GetToken),
