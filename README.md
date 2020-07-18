@@ -1,3 +1,9 @@
+<p align="center">
+<a href="https://dscvit.com">
+	<img src="https://user-images.githubusercontent.com/30529572/72455010-fb38d400-37e7-11ea-9c1e-8cdeb5f5906e.png" />
+</a>
+ </p>
+
 ## github-orgs-api
 ---
 
@@ -153,12 +159,14 @@ d[contributors['login']] += project[1] * 10 + project[2] * 5 +project[3] * 15 + 
 
 * [GithubApi](https://developer.github.com/v3/) 
 
-### Built by
-* [GDGVIT](https://www.gdgvitvellore.com)
-
 ### Contributors
 
 * Shubham Bhardwaj
 * Apurva Nitanjay
 * Angad Sharma
+
+<p align="center">
+	Made with :heart: by <a href="https://dscvit.com">DSC VIT</a>
+</p>
+
 
